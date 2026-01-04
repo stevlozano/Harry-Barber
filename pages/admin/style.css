@@ -975,6 +975,7 @@ tr:hover td {
         width: 100% !important;
         max-width: 100vw;
         box-sizing: border-box;
+        margin-left: -70px !important;
     }
 
     .tab-content.active {
@@ -1162,6 +1163,7 @@ tr:hover td {
 @media (max-width: 375px) {
     .content {
         padding: 75px 12px 110px 12px !important;
+        margin-left: -70px !important;
     }
 
     .mobile-bottom-nav {
