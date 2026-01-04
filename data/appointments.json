@@ -1,0 +1,105 @@
+{
+  "appointments": [
+    {
+      "id": 1,
+      "date": "2026-01-04",
+      "time": "10:00",
+      "name": "Juan Pérez",
+      "phone": "612345678",
+      "encryptedPhone": "61******78",
+      "haircutId": 1,
+      "notes": "Corte clásico con barba recortada",
+      "createdAt": "2025-12-28T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "date": "2026-01-04",
+      "time": "11:00",
+      "name": "Carlos López",
+      "phone": "623456789",
+      "encryptedPhone": "62******89",
+      "haircutId": 2,
+      "notes": "Solo barba",
+      "createdAt": "2025-12-28T14:20:00Z"
+    },
+    {
+      "id": 3,
+      "date": "2026-01-05",
+      "time": "15:00",
+      "name": "María García",
+      "phone": "634567890",
+      "encryptedPhone": "63******90",
+      "haircutId": 3,
+      "notes": "Corte y barba para evento especial",
+      "createdAt": "2025-12-29T09:15:00Z"
+    },
+    {
+      "id": 4,
+      "date": "2026-01-06",
+      "time": "09:00",
+      "name": "Pedro Sánchez",
+      "phone": "645678901",
+      "encryptedPhone": "64******01",
+      "haircutId": 1,
+      "notes": "Corte tradicional",
+      "createdAt": "2025-12-29T16:45:00Z"
+    },
+    {
+      "id": 5,
+      "date": "2026-01-07",
+      "time": "16:00",
+      "name": "Ana Martínez",
+      "phone": "656789012",
+      "encryptedPhone": "65******12",
+      "haircutId": 2,
+      "notes": "Modelado de barba y corte de pelo",
+      "createdAt": "2025-12-30T11:30:00Z"
+    }
+  ],
+  "haircutTypes": [
+    {
+      "id": 1,
+      "name": "Corte Clásico",
+      "price": 12.00,
+      "description": "Corte básico con tijera y máquina"
+    },
+    {
+      "id": 2,
+      "name": "Barba",
+      "price": 8.00,
+      "description": "Afeitado y modelado de barba"
+    },
+    {
+      "id": 3,
+      "name": "Corte y Barba",
+      "price": 18.00,
+      "description": "Combo de corte y barba"
+    },
+    {
+      "id": 4,
+      "name": "Corte Moderno",
+      "price": 15.00,
+      "description": "Estilo moderno con línea personalizada"
+    }
+  ],
+  "promotions": [
+    {
+      "id": 1,
+      "name": "Promoción Lunes",
+      "description": "20% de descuento en cortes",
+      "discount": 20
+    },
+    {
+      "id": 2,
+      "name": "Cliente Frecuente",
+      "description": "5ta visita gratis",
+      "discount": 100
+    },
+    {
+      "id": 3,
+      "name": "Estudiante",
+      "description": "15% de descuento con carné universitario",
+      "discount": 15
+    }
+  ]
+}

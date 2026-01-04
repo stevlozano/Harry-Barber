@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Barber | Sitio Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --blanco: #ffffff;
+            --negro: #000000;
+            --gris-claro: #f1f1f1;
+            --gris-texto: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--negro);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 40px;
+            /* Espacio superior para la tarjeta */
+        }
+
+        /* 1. La Tarjeta Blanca Principal */
+        .main-card {
+            background-color: var(--blanco);
+            width: 100%;
+            max-width: 1780px;
+            border-radius: 40px;
+            padding: 20px 40px 60px 40px;
+            margin-bottom: 40px;
+            /* Espacio antes del footer */
+        }
+
+        /* Navegación */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-circle {
+            border: 1px solid var(--negro);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .logo-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background-color: var(--gris-claro);
+            padding: 6px;
+            border-radius: 40px;
+            display: flex;
+            gap: 5px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--negro);
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a.active {
+            background-color: var(--blanco);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Imagen y Texto */
+        .hero-image {
+            width: 100%;
+            height: 700px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-content h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .info-content p {
+            color: var(--gris-texto);
+            font-size: 1.15rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            max-width: 850px;
+        }
+
+        .info-content .bold-footer-text {
+            color: var(--negro);
+            font-weight: 700;
+        }
+
+        /* 2. El Footer (FUERA DE LA TARJETA) */
+        footer {
+            width: 100%;
+            max-width: 1780px;
+            padding: 40px 20px;
+            color: var(--blanco);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo .icon-circle {
+            border-color: var(--blanco);
+        }
+
+        .social-box {
+            text-align: right;
+        }
+
+        .social-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .fb-icon {
+            color: var(--blanco);
+            font-size: 1.8rem;
+            text-decoration: none;
+        }
+
+        .copyright-bar {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+                align-items: center;
+                text-align: center;
+            }
+
+            .social-box {
+                text-align: center;
+            }
+
+            .main-card {
+                padding: 20px;
+            }
+        }
+
+        /* PIN Modal Styles */
+        .pin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .pin-container {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pin-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #000, #D4AF37);
+        }
+
+        .pin-container h2 {
+            margin-bottom: 12px;
+            font-weight: 800;
+            font-size: 28px;
+            letter-spacing: -1px;
+        }
+
+        .pin-inputs {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .pin-digit {
+            width: 65px;
+            height: 80px;
+            border: 2px solid #f1f1f1;
+            border-radius: 20px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: 800;
+            background: #f9f9f9;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .pin-digit:focus {
+            border-color: #000;
+            background: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .btn-pin {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-pin:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #pinError {
+            color: #ef4444;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-card">
+        <header>
+            <div class="logo-box">
+                <div class="icon-circle"><i class="fas fa-scissors"></i></div>
+                <span class="logo-name">Harry Barber</span>
+            </div>
+            <nav>
+                <a href="/index.html" class="active">Inicio</a>
+                <a href="/pages/calender/calender.html">Reservar</a>
+                <a href="javascript:void(0)" onclick="openBarberAuth()">Barbero</a>
+            </nav>
+        </header>
+
+        <section class="info-content">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop"
+                alt="Barbería" class="hero-image">
+
+            <h1>BIENVENIDOS A HARRY BARBER</h1>
+            <p>
+                Esta iniciativa de mejorar la atención mediante esta app/web ayudará al cliente que desee reservar su
+                cita con mayor anticipación y no tener que esperar largas colas.
+            </p>
+            <p class="bold-footer-text">
+                Somos Harry Barber y los esperamos.
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="icon-circle"><i class="fas fa-scissors"></i></div>
+                <span class="logo-name">Harry Barber</span>
+            </div>
+            <div class="social-box">
+                <h4>Siguenos</h4>
+                <a href="#" class="fb-icon"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            © 2025 Codeol. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <!-- PIN Modal -->
+    <div id="pinModal" class="pin-modal">
+        <div class="pin-container">
+            <h2 id="pinTitle">Registrar Código PIN</h2>
+            <p id="pinSub" style="margin-bottom: 20px; color: #666;">Crea un código de 4 dígitos para acceder al panel.
+            </p>
+            <div class="pin-inputs">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+            </div>
+            <button class="btn-pin" onclick="handlePinSubmit()">Confirmar</button>
+            <p id="pinError">Código incorrecto</p>
+            <button onclick="closePinModal()"
+                style="background: none; border: none; margin-top: 15px; color: #999; cursor: pointer;">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        const pinModal = document.getElementById('pinModal');
+        const pinDigits = document.querySelectorAll('.pin-digit');
+        const pinTitle = document.getElementById('pinTitle');
+        const pinSub = document.getElementById('pinSub');
+        const pinError = document.getElementById('pinError');
+
+        let isRegistration = false;
+
+        function openBarberAuth() {
+            const savedPin = localStorage.getItem('barberPin');
+            pinError.style.display = 'none';
+            clearPinFields();
+
+            if (!savedPin) {
+                isRegistration = true;
+                pinTitle.textContent = "Registrar Código PIN";
+                pinSub.textContent = "Crea un código de 4 dígitos para tu primer ingreso.";
+            } else {
+                isRegistration = false;
+                pinTitle.textContent = "Acceso Barbero";
+                pinSub.textContent = "Ingresa tu código de 4 dígitos.";
+            }
+            pinModal.style.display = 'flex';
+            pinDigits[0].focus();
+        }
+
+        function closePinModal() {
+            pinModal.style.display = 'none';
+        }
+
+        function clearPinFields() {
+            pinDigits.forEach(input => input.value = '');
+        }
+
+        // Auto focus next input
+        pinDigits.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value && index < 3) {
+                    pinDigits[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    pinDigits[index - 1].focus();
+                }
+            });
+        });
+
+        function handlePinSubmit() {
+            let pin = "";
+            pinDigits.forEach(input => pin += input.value);
+
+            if (pin.length < 4) {
+                showError("Ingresa los 4 dígitos");
+                return;
+            }
+
+            if (isRegistration) {
+                localStorage.setItem('barberPin', pin);
+                window.location.href = "/pages/admin/panel.html";
+            } else {
+                const savedPin = localStorage.getItem('barberPin');
+                if (pin === savedPin) {
+                    window.location.href = "/pages/admin/panel.html";
+                } else {
+                    showError("Código incorrecto, intenta de nuevo");
+                    clearPinFields();
+                    pinDigits[0].focus();
+                }
+            }
+        }
+
+        function showError(msg) {
+            pinError.textContent = msg;
+            pinError.style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

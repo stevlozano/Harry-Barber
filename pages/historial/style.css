@@ -1,0 +1,478 @@
+:root {
+    --bg-color: #E6E6E6;
+    --primary-black: #000000;
+    --text-white: #FFFFFF;
+    --card-white: #FFFFFF;
+    --gray-inactive: #808080;
+    --hover-gray: #333333;
+    --border-radius-lg: 30px;
+    --border-radius-md: 12px;
+    --font-family: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    width: 100%;
+    max-width: 1780px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    background-color: #000000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 300px;
+    height: 60px;
+    border-radius: 50px;
+    z-index: 500;
+}
+
+.logo-navbar {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    margin-right: auto;
+    margin-left: -15px;
+}
+
+.btn-modal {
+    border: 2px solid #7c7c7c00;
+    background-color: #5f5f5f4d;
+    border-radius: 50px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    transition: transform 0.3s ease;
+}
+
+.btn-modal:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
+    color: #000000;
+}
+
+.modal-dialog-content {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 267px !important;
+    height: 205px !important;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 86px;
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 25px;
+    border: none;
+    padding: 25px;
+    overflow: hidden;
+}
+
+.modal-dialog-content::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transition: transform 0.3s ease;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+}
+
+.btn-close:hover {
+    background-color: #3b3b3b;
+    transform: scale(1.1);
+}
+
+.title-modal {
+    margin-top: 10px;
+    margin-left: 0;
+    font-weight: 700;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.option {
+    color: #f7f7f7;
+    font-size: 18px;
+    flex-direction: column;
+    display: flex;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    margin-bottom: 5px;
+    margin-left: 0;
+    background-color: #3b3b3b00;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 97%;
+    text-decoration: none;
+}
+
+.option:hover {
+    background-color: #3b3b3b;
+    transform: scale(1.1);
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1.welcome-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: black;
+}
+
+/* History Section */
+.history-section {
+    background-color: var(--primary-black);
+    color: var(--text-white);
+    padding: 40px;
+    border-radius: var(--border-radius-lg);
+}
+
+.section-title {
+    font-size: 24px;
+    margin: 0 0 20px 0;
+}
+
+.filter-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.pill {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: white;
+    color: black;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pill:hover {
+    background: #f0f0f0;
+}
+
+.pill.active {
+    background: #888;
+    color: black;
+}
+
+.history-list {
+    display: grid;
+    gap: 15px;
+}
+
+.history-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    transition: transform 0.2s;
+}
+
+.history-card:hover {
+    transform: translateX(5px);
+}
+
+.history-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: black;
+}
+
+.history-details {
+    color: #666;
+    font-size: 14px;
+}
+
+.history-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.status-upcoming {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-past {
+    background: #f5f5f5;
+    color: #757575;
+}
+
+.status-today {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.status-atendido {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-pendiente {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.btn-view {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-view:hover {
+    background: #333;
+    transform: scale(1.05);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.details-modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 32px;
+    height: 32px;
+    background: #f4f4f4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.close-modal:hover {
+    background: #e0e0e0;
+    transform: rotate(90deg);
+}
+
+.modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: black;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.details-grid {
+    display: grid;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+}
+
+.details-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-close-details {
+    background: black;
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-details:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-wrapper {
+        padding: 10px;
+        margin-top: 80px;
+        /* Add space for fixed navbar */
+    }
+
+    .navbar {
+        width: 95%;
+        max-width: 350px;
+        right: 2.5%;
+    }
+
+    h1.welcome-title {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .history-section {
+        padding: 20px 15px;
+        border-radius: 20px;
+    }
+
+    .history-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .btn-view {
+        width: 100%;
+    }
+
+    .modal-dialog-content {
+        width: 85%;
+        max-width: 250px !important;
+        padding: 20px;
+    }
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial - Harry Barber</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img class="logo-navbar" src="/images/logo/logo.png" alt="Harry Barber Logo">
+        <button class="btn-modal" onclick="modal.showModal()">=</button>
+    </nav>
+
+    <!-- Modal Menu -->
+    <dialog class="modal-dialog-content" id="modal">
+        <button class="btn-close" onclick="modal.close()">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+        <h3 class="title-modal">Opciones</h3>
+        <a href="/pages/tipos-corte/tipos-corte.html" class="option">Cortes</a>
+        <a href="/pages/historial/story.html" class="option">Historial</a>
+        <a href="/pages/promociones/promociones.html" class="option">Promociones</a>
+        <a href="/pages/calender/calender.html" class="option">Calendario</a>
+    </dialog>
+    <div class="main-wrapper">
+
+
+        <!-- Welcome Title -->
+        <h1 class="welcome-title">Historial de Reservas</h1>
+
+        <!-- History Section -->
+        <section class="history-section">
+            <h2 class="section-title">Todas las Reservas</h2>
+
+            <!-- Filter Pills -->
+            <div class="filter-pills">
+                <button class="pill active" data-filter="all">Todas</button>
+                <button class="pill" data-filter="upcoming">Próximas</button>
+                <button class="pill" data-filter="past">Pasadas</button>
+                <button class="pill" data-filter="today">Hoy</button>
+            </div>
+
+            <!-- Reservations List -->
+            <div id="historyList" class="history-list">
+                <!-- Reservations will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal-overlay">
+        <div class="details-modal-content">
+            <div id="closeDetailsModal" class="close-modal">&times;</div>
+            <h2 class="modal-title">Detalles de Reserva</h2>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <div class="detail-label">Cliente</div>
+                    <div class="detail-value" id="detail-nombre">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Fecha</div>
+                    <div class="detail-value" id="detail-fecha">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Hora</div>
+                    <div class="detail-value" id="detail-hora">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Servicio</div>
+                    <div class="detail-value" id="detail-corte">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Método de Pago</div>
+                    <div class="detail-value" id="detail-pago">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">WhatsApp</div>
+                    <div class="detail-value" id="detail-whatsapp">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Estado</div>
+                    <div class="detail-value" id="detail-status">-</div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Estado de Pago</div>
+                    <div class="detail-value" id="detail-pago-status">-</div>
+                </div>
+            </div>
+
+            <div class="details-actions">
+                <button class="btn-close-details" onclick="closeDetailsModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
