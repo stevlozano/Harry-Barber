@@ -9,29 +9,12 @@ class DataSync {
         this.isSyncing = false;
     }
 
-    // Load data from JSON file (initial data only)
+    // Load data from JSON file (DISABLED - start with empty system)
     async loadDataFromServer() {
-        try {
-            // Check if we already have data in localStorage
-            const localData = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-            
-            // Only load from server if localStorage is empty (first visit)
-            if (localData.length > 0) {
-                console.log('Using existing localStorage data, skipping server load');
-                return null;
-            }
-            
-            const response = await fetch(this.dataUrl);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            return this.convertServerData(data);
-        } catch (error) {
-            console.warn('Failed to load data from server:', error);
-            return null;
-        }
+        // DISABLED: System should start completely empty
+        // No sample data should be loaded automatically
+        console.log('Sample data loading disabled - system starts empty');
+        return null;
     }
 
     // Convert server JSON format to app format
@@ -71,19 +54,18 @@ class DataSync {
         });
     }
 
-    // Sync data with localStorage
+    // Sync data with localStorage (start empty)
     syncWithLocalStorage(serverData = null) {
+        // Always start with empty array - no sample data
         let currentData = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
         
-        // Only use server data if localStorage is empty (first visit)
-        if (serverData && serverData.length > 0 && currentData.length === 0) {
-            localStorage.setItem(this.storageKey, JSON.stringify(serverData));
-            console.log('Initial data loaded from server:', serverData.length, 'appointments');
-            return serverData;
+        // Ensure localStorage is initialized as empty
+        if (currentData.length === 0) {
+            localStorage.setItem(this.storageKey, JSON.stringify([]));
+            console.log('System initialized with empty reservations');
         }
         
-        // Otherwise, use existing localStorage data
-        console.log('Using existing data:', currentData.length, 'appointments');
+        console.log('Current reservations:', currentData.length);
         return currentData;
     }
 
