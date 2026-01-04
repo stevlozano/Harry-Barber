@@ -233,6 +233,16 @@ function deleteReservation(id) {
         let res = JSON.parse(localStorage.getItem('reservations') || '[]');
         res = res.filter(r => r.id !== id);
         localStorage.setItem('reservations', JSON.stringify(res));
+        
+        // Notify other tabs of the deletion
+        if (typeof DataSync !== 'undefined') {
+            const dataSync = new DataSync();
+            dataSync.notifyDataChange();
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadReservations();
         refreshDashboard();
     }
