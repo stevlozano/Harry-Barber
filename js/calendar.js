@@ -76,11 +76,11 @@ function renderCalendar(date) {
             dayElement.classList.add('today');
         }
         
-        // Format the date for comparison with appointments
+        // Format the date for comparison with reservations
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         
         // Check if there are appointments for this day
-        const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+        const appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
         const dayAppointments = appointments.filter(app => app.date === dateStr);
         
         // Add appointments indicator if any exist
@@ -184,7 +184,7 @@ function isTimeSlotAvailable(date, time) {
 // Function to get booked times for a specific date
 function getBookedTimesForDate(date) {
     const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-    return appointments
+    return reservations
         .filter(app => app.date === date)
         .map(app => app.time);
 }

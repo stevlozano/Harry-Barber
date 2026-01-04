@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function initializeApp() {
     // Initialize default data if not present
-    if (!localStorage.getItem('appointments')) {
-        localStorage.setItem('appointments', JSON.stringify([]));
+    if (!localStorage.getItem('reservations')) {
+        localStorage.setItem('reservations', JSON.stringify([]));
     }
 
     if (!localStorage.getItem('haircutTypes')) {
@@ -146,7 +146,7 @@ function switchToTab(tabId) {
 
 // Function to load appointments from localStorage
 function loadAppointments() {
-    const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    const appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
     displayAppointments(appointments);
     updateCalendar();
 }
@@ -278,9 +278,9 @@ function getHaircutName(haircutId) {
 // Function to delete an appointment
 function deleteAppointment(id) {
     if (confirm('¿Estás seguro de que deseas eliminar esta reserva?')) {
-        let appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+        let appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
         appointments = appointments.filter(app => app.id !== id);
-        localStorage.setItem('appointments', JSON.stringify(appointments));
+        localStorage.setItem('reservations', JSON.stringify(appointments));
         loadAppointments(); // Reload the appointments list
     }
 }
@@ -291,7 +291,7 @@ function filterAppointments() {
     const month = document.getElementById('monthFilter').value;
     const weekDay = document.getElementById('weekFilter').value;
 
-    let appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    let appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
 
     // Filter by year
     if (year) {
