@@ -1,15 +1,37 @@
 // Configuration
 const BARBER_WHATSAPP = '5197185907';
 
+// State with enhanced data loading
 const state = {
     currentDate: new Date(),
     selectedDate: null,
-    reservations: JSON.parse(localStorage.getItem('reservations')) || []
+    reservations: [],
+    isLoading: true,
+    dataSync: new DataSync()
 };
 
-// Save reservations to localStorage
+// Load data using the synchronization utility
+async function loadData() {
+    try {
+        state.reservations = await state.dataSync.initialize(() => {
+            // Callback when data is updated from another tab
+            renderCalendar();
+            renderReservations();
+        });
+        console.log('Datos cargados:', state.reservations.length, 'reservas');
+    } catch (error) {
+        console.error('Error cargando datos:', error);
+        // Fallback to localStorage
+        state.reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+        localStorage.setItem('reservations', JSON.stringify(state.reservations));
+    }
+    state.isLoading = false;
+}
+
+// Save reservations using the synchronization utility
 function saveReservations() {
     localStorage.setItem('reservations', JSON.stringify(state.reservations));
+    state.dataSync.notifyDataChange();
     console.log('Reservas guardadas:', state.reservations);
 }
 
@@ -234,8 +256,10 @@ function renderFilteredReservations(reservations, filterType) {
     console.log(`Mostrando ${sortedReservations.length} reservas para filtro: ${filterType}`);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Página cargada. Reservas en localStorage:', state.reservations);
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Cargando datos...');
+    await loadData();
+    console.log('Página cargada. Reservas:', state.reservations);
     renderCalendar();
     setupModalHandlers();
     setupNavigation();
@@ -244,6 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDetailsModal();
     renderReservations();
     loadHaircutTypes(); // Load types from localStorage
+    
+    // Setup tab synchronization
+    setupTabSync();
 });
 
 function loadHaircutTypes() {
@@ -331,7 +358,11 @@ function setupModalHandlers() {
         saveReservations();
         sendWhatsAppMessage(reservationData);
 
-        alert(`✅ ¡Reserva Confirmada para ${reservationData.nombre}!\nFecha: ${reservationData.fecha}\nHora: ${reservationData.hora}\n\nSe ha enviado la confirmación por WhatsApp.`);
+        alert(`✅ ¡Reserva Confirmada para ${reservationData.nombre}!
+Fecha: ${reservationData.fecha}
+Hora: ${reservationData.hora}
+
+Se ha enviado la confirmación por WhatsApp.`);
 
         renderReservations();
         closeModal();
@@ -446,4 +477,10 @@ function setupDetailsModal() {
             closeDetailsModal();
         }
     });
+}
+
+// Setup synchronization between browser tabs
+function setupTabSync() {
+    // Tab synchronization is now handled by DataSync utility
+    console.log('Tab synchronization managed by DataSync utility');
 }

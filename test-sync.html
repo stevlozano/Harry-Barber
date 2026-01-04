@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Sincronización - Harry Barber</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #555;
+        }
+        .log {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test de Sincronización</h1>
+        <p>Esta página te permite probar que la sincronización entre pestañas/navegadores funciona correctamente.</p>
+        
+        <div class="status info">
+            <strong>ℹ️ Instrucciones:</strong>
+            <ol>
+                <li>Abre esta página en dos pestañas diferentes</li>
+                <li>En una pestaña, haz clic en "Agregar Reserva"</li>
+                <li>Observa cómo aparece automáticamente en la otra pestaña</li>
+                <li>Verifica que el calendario también se actualiza</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>Datos Actuales</h2>
+            <div id="dataCount" class="status info">Cargando...</div>
+            <button onclick="loadCurrentData()">🔄 Recargar Datos</button>
+            <button onclick="clearAllData()">🗑️ Limpiar Todo</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Pruebas de Sincronización</h2>
+            <button onclick="addTestReservation()">➕ Agregar Reserva de Prueba</button>
+            <button onclick="simulateExternalChange()">📡 Simular Cambio Externo</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Log de Eventos</h2>
+            <div id="log" class="log"></div>
+            <button onclick="clearLog()">🧹 Limpiar Log</button>
+        </div>
+    </div>
+
+    <script src="../../js/data-sync.js"></script>
+    <script>
+        // Logger function
+        function log(message) {
+            const logElement = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.innerHTML += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Initialize
+        const dataSync = new DataSync();
+        let currentData = [];
+
+        async function init() {
+            log('Inicializando sistema de sincronización...');
+            try {
+                currentData = await dataSync.initialize(() => {
+                    log('🔄 Datos actualizados desde otra pestaña');
+                    updateDataDisplay();
+                });
+                updateDataDisplay();
+                log('✅ Sistema inicializado correctamente');
+            } catch (error) {
+                log('❌ Error en inicialización: ' + error.message);
+            }
+        }
+
+        function updateDataDisplay() {
+            const countElement = document.getElementById('dataCount');
+            const count = currentData.length;
+            countElement.textContent = `Reservas almacenadas: ${count}`;
+            countElement.className = count > 0 ? 'status success' : 'status warning';
+        }
+
+        async function loadCurrentData() {
+            log('Recargando datos...');
+            currentData = JSON.parse(localStorage.getItem('reservations') || '[]');
+            updateDataDisplay();
+            log(`Datos recargados: ${currentData.length} elementos`);
+        }
+
+        function addTestReservation() {
+            const newReservation = {
+                id: Date.now().toString(),
+                fecha: `${new Date().getDate()} de Enero de 2026`,
+                hora: '10:00',
+                nombre: `Cliente de prueba ${Math.floor(Math.random() * 1000)}`,
+                whatsapp: '999888777',
+                corte: 'Corte Clásico',
+                price: 15.00,
+                pago: 'pendiente',
+                status: 'confirmada',
+                paymentStatus: 'pendiente',
+                paymentMethod: 'none',
+                createdAt: new Date().toISOString()
+            };
+
+            currentData.push(newReservation);
+            localStorage.setItem('reservations', JSON.stringify(currentData));
+            dataSync.notifyDataChange();
+            
+            updateDataDisplay();
+            log(`✅ Reserva agregada: ${newReservation.nombre}`);
+        }
+
+        function simulateExternalChange() {
+            // Simulate another tab changing data
+            setTimeout(() => {
+                const event = new StorageEvent('storage', {
+                    key: 'reservations',
+                    oldValue: JSON.stringify([]),
+                    newValue: JSON.stringify([{
+                        id: 'simulated-' + Date.now(),
+                        fecha: '5 de Enero de 2026',
+                        hora: '11:00',
+                        nombre: 'Simulación externa',
+                        whatsapp: '111222333',
+                        corte: 'Barba',
+                        price: 10.00,
+                        pago: 'pendiente',
+                        status: 'confirmada',
+                        paymentStatus: 'pendiente',
+                        paymentMethod: 'none',
+                        createdAt: new Date().toISOString()
+                    }])
+                });
+                window.dispatchEvent(event);
+                log('📡 Evento de almacenamiento simulado');
+            }, 1000);
+        }
+
+        function clearAllData() {
+            if (confirm('¿Estás seguro de limpiar todos los datos?')) {
+                localStorage.removeItem('reservations');
+                currentData = [];
+                updateDataDisplay();
+                dataSync.notifyDataChange();
+                log('🗑️ Todos los datos han sido eliminados');
+            }
+        }
+
+        // Start the test
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
