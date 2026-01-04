@@ -9,9 +9,18 @@ class DataSync {
         this.isSyncing = false;
     }
 
-    // Load data from JSON file
+    // Load data from JSON file (initial data only)
     async loadDataFromServer() {
         try {
+            // Check if we already have data in localStorage
+            const localData = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+            
+            // Only load from server if localStorage is empty (first visit)
+            if (localData.length > 0) {
+                console.log('Using existing localStorage data, skipping server load');
+                return null;
+            }
+            
             const response = await fetch(this.dataUrl);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -66,14 +75,15 @@ class DataSync {
     syncWithLocalStorage(serverData = null) {
         let currentData = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
         
-        if (serverData && serverData.length > 0) {
-            // Merge server data with local data (avoid duplicates)
-            const mergedData = this.mergeData(serverData, currentData);
-            localStorage.setItem(this.storageKey, JSON.stringify(mergedData));
-            console.log('Data synced with server:', mergedData.length, 'appointments');
-            return mergedData;
+        // Only use server data if localStorage is empty (first visit)
+        if (serverData && serverData.length > 0 && currentData.length === 0) {
+            localStorage.setItem(this.storageKey, JSON.stringify(serverData));
+            console.log('Initial data loaded from server:', serverData.length, 'appointments');
+            return serverData;
         }
         
+        // Otherwise, use existing localStorage data
+        console.log('Using existing data:', currentData.length, 'appointments');
         return currentData;
     }
 

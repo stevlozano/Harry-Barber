@@ -13,11 +13,21 @@ const state = {
 // Load data using the synchronization utility
 async function loadData() {
     try {
+        // Check if we have existing reservations in localStorage
+        const existingReservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+        
         state.reservations = await state.dataSync.initialize(() => {
             // Callback when data is updated from another tab
             renderCalendar();
             renderReservations();
         });
+        
+        // If we had existing reservations, preserve them
+        if (existingReservations.length > 0 && state.reservations.length === 0) {
+            state.reservations = existingReservations;
+            console.log('Preserving existing reservations:', existingReservations.length);
+        }
+        
         console.log('Datos cargados:', state.reservations.length, 'reservas');
     } catch (error) {
         console.error('Error cargando datos:', error);
