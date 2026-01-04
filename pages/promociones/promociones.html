@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones - Harry Barber</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <img class="logo-navbar" src="/images/logo/logo.png" alt="Harry Barber Logo">
+            <button class="btn-modal" onclick="modal.showModal()">=</button>
+        </nav>
+
+        <!-- Modal Menu -->
+        <dialog class="modal-dialog-content" id="modal">
+            <button class="btn-close" onclick="modal.close()">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+            <h3 class="title-modal">Opciones</h3>
+            <a href="/pages/tipos-corte/tipos-corte.html" class="option">Cortes</a>
+            <a href="/pages/historial/story.html" class="option">Historial</a>
+            <a href="/pages/promociones/promociones.html" class="option">Promociones</a>
+            <a href="/pages/calender/calender.html" class="option">Calendario</a>
+        </dialog>
+
+        <!-- Welcome Title -->
+        <h1 class="welcome-title">Promociones Semanales</h1>
+
+        <!-- Promotions Section -->
+        <section class="promotions-section">
+            <div id="promotionsContainer" class="promotions-grid">
+                <!-- Promotions will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Booking Modal for Promotions -->
+    <div id="bookingModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="closeModal" class="close-modal">&times;</div>
+            <h2 class="modal-title">Reservar Promoción</h2>
+
+            <form id="bookingForm" class="form-grid">
+                <!-- Promo & Date Row -->
+                <div class="form-group">
+                    <label class="form-label">Promoción Seleccionada</label>
+                    <input type="text" id="promoInput" class="form-input readonly" readonly>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label">Fecha</label>
+                        <input type="date" id="dateInput" class="form-input" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label">Hora</label>
+                        <select id="timeInput" class="form-select" required>
+                            <option value="" disabled selected>Elegir hora</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">01:00 PM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                            <option value="18:00">06:00 PM</option>
+                            <option value="19:00">07:00 PM</option>
+                            <option value="20:00">08:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Personal Info -->
+                <div class="form-group">
+                    <label class="form-label">Nombre Completo</label>
+                    <input type="text" id="nameInput" class="form-input" placeholder="Ej: Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">WhatsApp</label>
+                    <input type="tel" id="whatsappInput" class="form-input" placeholder="Ej: 999 888 777" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Método de Pago</label>
+                    <select id="paymentInput" class="form-select" required>
+                        <option value="" disabled selected>Seleccionar pago</option>
+                        <option value="yape">Yape</option>
+                        <option value="plin">Plin</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="tarjeta">Tarjeta</option>
+                    </select>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn-submit">Confirmar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

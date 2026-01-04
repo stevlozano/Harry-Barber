@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Panel del Barbero - Harry Barber</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Mobile Header (Minimal) -->
+        <div class="mobile-top-bar">
+            <!-- <div class="logo-box" style="display:flex; align-items:center; gap:10px; color:white">
+                <img src="/assets/images/logo/logo.png" alt="Logo" style="width:32px; height:32px">
+                <span style="font-weight:800">Harry Barber</span>
+            </div> -->
+            <div class="user-info-mobile">
+                <div class="avatar" id="mobileHeaderAvatar">H</div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation (Google/WhatsApp Style) -->
+        <nav class="mobile-bottom-nav">
+            <button class="nav-btn active" data-tab="dashboard">
+                <span class="material-symbols-outlined">dashboard</span>
+                <small>Inicio</small>
+            </button>
+            <button class="nav-btn" data-tab="reservations">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <small>Citas</small>
+            </button>
+            <button class="nav-btn" data-tab="haircuts">
+                <span class="material-symbols-outlined">content_cut</span>
+                <small>Cortes</small>
+            </button>
+            <button class="nav-btn" data-tab="promotions">
+                <span class="material-symbols-outlined">sell</span>
+                <small>Promos</small>
+            </button>
+            <button class="nav-btn" data-tab="settings">
+                <span class="material-symbols-outlined">settings</span>
+                <small>Ajustes</small>
+            </button>
+        </nav>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar (Desktop only) -->
+        <aside class="sidebar" id="sidebar">
+            <!-- <div class="sidebar-header">
+                <img src="/assets/images/logo/logo.png" alt="Logo" class="admin-logo">
+                <h2>Admin</h2>
+            </div> -->
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-tab="dashboard">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </button>
+                <button class="nav-item" data-tab="reservations">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    Reservaciones
+                </button>
+                <button class="nav-item" data-tab="haircuts">
+                    <span class="material-symbols-outlined">content_cut</span>
+                    Tipos de Corte
+                </button>
+                <button class="nav-item" data-tab="promotions">
+                    <span class="material-symbols-outlined">sell</span>
+                    Promociones
+                </button>
+                <button class="nav-item" data-tab="settings">
+                    <span class="material-symbols-outlined">settings</span>
+                    Configuración
+                </button>
+                <a href="/index.html" class="nav-item logout">
+                    <span class="material-symbols-outlined">logout</span>
+                    Salir
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="content-header">
+                <h1 id="tabTitle">Dashboard</h1>
+                <!-- <div class="user-info">
+                    <span id="headerUserName">Harry Barber</span>
+                    <div class="avatar" id="headerAvatar">H</div>
+                </div> -->
+            </header>
+
+            <!-- Dashboard Tab -->
+            <section class="tab-content active" id="dashboardTab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="material-symbols-outlined icon-pending">schedule</span>
+                        <div class="stat-info">
+                            <h3>Pendientes</h3>
+                            <p id="pendingCount">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="material-symbols-outlined icon-done">check_circle</span>
+                        <div class="stat-info">
+                            <h3>Completadas</h3>
+                            <p id="doneCount">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card clickable-stat" onclick="openRevenueDetails()" title="Ver desglose de pagos">
+                        <span class="material-symbols-outlined icon-money">payments</span>
+                        <div class="stat-info">
+                            <h3>Ingresos Totales (Pagados)</h3>
+                            <p id="totalRevenue">S/ 0.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-reservations">
+                    <div class="action-bar" style="margin-bottom: 20px;">
+                        <h2>Gestión de Agenda</h2>
+                        <select id="dashboardDateFilter" class="statusFilter" onchange="refreshDashboard()"
+                            style="width: auto; min-width: 150px;">
+                            <option value="today">Hoy</option>
+                            <option value="tomorrow">Mañana</option>
+                            <option value="upcoming" selected>Próximas</option>
+                            <option value="all">Todo el Historial</option>
+                        </select>
+                    </div>
+                    <div class="table-container">
+                        <table id="todayReservationsTable">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Servicio</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Today's reservations will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reservations Tab -->
+            <section class="tab-content" id="reservationsTab">
+                <div class="filters-bar">
+                    <input type="text" id="searchReservation" placeholder="Buscar por nombre o teléfono...">
+                    <select class="statusFilter" id="statusFilter">
+                        <option value="all">Todos los estados</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="atendido">Atendido</option>
+                    </select>
+                </div>
+                <div class="table-container">
+                    <table id="allReservationsTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Cliente</th>
+                                <th>Teléfono</th>
+                                <th>Servicio</th>
+                                <th>Pago</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- All reservations will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Haircuts Tab -->
+            <section class="tab-content" id="haircutsTab">
+                <div class="action-bar">
+                    <h2>Gestionar Cortes</h2>
+                    <button class="btn-primary" onclick="openHaircutModal()">
+                        <span class="material-symbols-outlined">add</span>
+                        Nuevo Corte
+                    </button>
+                </div>
+                <div class="haircuts-grid" id="adminHaircutsGrid">
+                    <!-- Haircuts will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Promotions Tab -->
+            <section class="tab-content" id="promotionsTab">
+                <div class="action-bar">
+                    <h2>Gestionar Promociones</h2>
+                    <button class="btn-primary" onclick="openPromotionModal()">
+                        <span class="material-symbols-outlined">add</span>
+                        Nueva Promoción
+                    </button>
+                </div>
+                <div class="promotions-grid" id="adminPromotionsGrid">
+                    <!-- Promotions will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section class="tab-content" id="settingsTab">
+                <div class="settings-premium-wrapper">
+                    <div class="settings-header-minimal">
+                        <span>Panel de Control</span>
+                        <h2>Configuración</h2>
+                        <p>Gestiona tu identidad y seguridad con estilo.</p>
+                    </div>
+
+                    <div class="settings-main-grid">
+                        <!-- Profile Card -->
+                        <div class="glass-card profile-premium">
+                            <div class="card-glow"></div>
+                            <div class="profile-header">
+                                <div class="avatar-container"
+                                    onclick="document.getElementById('profileImageInput').click()">
+                                    <div class="avatar-hover-text">Cambiar Foto</div>
+                                    <label for="profileImageInput" class="avatar-large-neon" id="profileImagePreview">
+                                        <span class="material-symbols-outlined">person</span>
+                                    </label>
+                                    <div class="avatar-pulse"></div>
+                                </div>
+                                <input type="file" id="profileImageInput" accept="image/*" hidden
+                                    onchange="updateProfilePhoto(this)">
+                                <div class="profile-info-text">
+                                    <h3 id="currentProfileName">Harry Barber</h3>
+                                    <p>Propietario</p>
+                                </div>
+                            </div>
+
+                            <form id="profileForm" class="elegant-form">
+                                <div class="form-group-minimal">
+                                    <label>Tu Nombre</label>
+                                    <input type="text" id="profileName" placeholder="Escribe tu nombre..." required>
+                                    <span class="input-line"></span>
+                                </div>
+                                <button type="submit" class="btn-neon">
+                                    <span>Actualizar Perfil</span>
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Security Card -->
+                        <div class="glass-card security-premium">
+                            <div class="card-glow"></div>
+                            <div class="security-icon-header">
+                                <span class="material-symbols-outlined">key_visualizer</span>
+                            </div>
+                            <h3>Acceso Seguro</h3>
+                            <p>Actualiza tu llave de 4 dígitos para proteger tu panel.</p>
+
+                            <form id="pinForm" class="pin-form-elegant">
+                                <div class="pin-display-neon">
+                                    <input type="password" maxlength="1" class="pin-slot" id="pin1" required>
+                                    <input type="password" maxlength="1" class="pin-slot" id="pin2" required>
+                                    <input type="password" maxlength="1" class="pin-slot" id="pin3" required>
+                                    <input type="password" maxlength="1" class="pin-slot" id="pin4" required>
+                                </div>
+                                <button type="submit" class="btn-outline-minimal">Guardar Cambio de PIN</button>
+                            </form>
+                        </div>
+
+                        <!-- Logout/Session Card -->
+                        <div class="glass-card session-premium" style="grid-column: 1 / -1;">
+                            <div class="card-glow"></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h3 style="margin-bottom: 5px;">Sesión del Administrador</h3>
+                                    <p style="color: var(--text-muted); font-size: 0.9rem;">Finaliza tu sesión de forma
+                                        segura.</p>
+                                </div>
+                                <button class="btn-logout-premium" onclick="logout()">
+                                    <span>Cerrar Sesión</span>
+                                    <span class="material-symbols-outlined">logout</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Detailed Reservation Modal -->
+    <div id="resDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('resDetailModal')">&times;</span>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span class="material-symbols-outlined"
+                    style="font-size: 64px; color: var(--accent); margin-bottom: 15px;">receipt_long</span>
+                <h2>Detalles de la Cita</h2>
+            </div>
+
+            <div id="resDetailBody">
+                <!-- Details will be loaded here -->
+            </div>
+
+            <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <button class="btn-primary" onclick="closeModal('resDetailModal')"
+                    style="background: #f1f5f9; color: var(--text-main);">Cerrar</button>
+                <button class="btn-primary" id="btnEditFromDetail">Editar Estado</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Haircut Modal -->
+    <div id="haircutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('haircutModal')">&times;</span>
+            <h2 id="haircutModalTitle">Nuevo Tipo de Corte</h2>
+            <form id="haircutForm">
+                <input type="hidden" id="haircutId">
+                <div class="form-group">
+                    <label>Imagen del Corte</label>
+                    <div class="image-upload-wrapper" onclick="document.getElementById('haircutImageInput').click()"
+                        style="height: 200px; border: 2px dashed #e2e8f0; border-radius: 20px; display: flex; align-items: center; justify-content: center; background: #f8fafc; cursor: pointer;">
+                        <div id="imagePreview" style="text-align: center; color: var(--text-muted);">
+                            <span class="material-symbols-outlined" style="font-size: 40px;">add_a_photo</span>
+                            <p>Subir Imagen</p>
+                        </div>
+                    </div>
+                    <input type="file" id="haircutImageInput" accept="image/*" hidden onchange="previewImage(this)">
+                </div>
+                <div class="form-group">
+                    <label for="haircutName">Nombre del Corte</label>
+                    <input type="text" id="haircutName" required>
+                </div>
+                <div class="form-group">
+                    <label for="haircutPrice">Precio (S/)</label>
+                    <input type="number" id="haircutPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="haircutDescription">Descripción</label>
+                    <textarea id="haircutDescription" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Promotion Modal -->
+    <div id="promotionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('promotionModal')">&times;</span>
+            <h2 id="promoModalTitle">Nueva Promoción</h2>
+            <form id="promotionForm">
+                <input type="hidden" id="promoId">
+                <div class="form-group">
+                    <label for="promoName">Nombre de la Promoción</label>
+                    <input type="text" id="promoName" required>
+                </div>
+                <div class="form-group">
+                    <label for="promoDiscount">Descuento (%)</label>
+                    <input type="number" id="promoDiscount" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="promoDescription">Descripción</label>
+                    <textarea id="promoDescription" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Guardar Promoción</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Reservation Modal -->
+    <div id="editReservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editReservationModal')">&times;</span>
+            <h2>Gestionar Reservación</h2>
+            <p style="color:var(--text-muted); margin-bottom:30px">Actualiza el estado de la cita y el pago.</p>
+            <form id="editReservationForm">
+                <input type="hidden" id="editResId">
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <input type="text" id="editResName" readonly disabled style="background:#f1f5f9">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="editResStatus">Estado Cita</label>
+                        <select id="editResStatus">
+                            <option value="pendiente">Pendiente</option>
+                            <option value="atendido">Atendido</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editResPaymentStatus">Estado Pago</label>
+                        <select id="editResPaymentStatus">
+                            <option value="pendiente">Pendiente</option>
+                            <option value="pagado">Pagado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editResPaymentMethod">Método de Pago</label>
+                    <select id="editResPaymentMethod">
+                        <option value="none">Por definir</option>
+                        <option value="Yape">Yape</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta">Tarjeta</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Actualizar
+                    Cita</button>
+            </form>
+        </div>
+    </div>
+    <!-- Revenue Breakdown Modal -->
+    <div id="revenueDetailModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <span class="close" onclick="closeModal('revenueDetailModal')">&times;</span>
+            <h2 style="margin-bottom: 10px;">Desglose de Ingresos</h2>
+            <p style="color:var(--text-muted); margin-bottom:25px">Distribución total por método de pago.</p>
+
+            <div id="revenueBreakdownList" class="revenue-breakdown-list">
+                <!-- Breakdown items will be injected here -->
+            </div>
+
+            <div class="revenue-total-footer"
+                style="margin-top:25px; padding-top:20px; border-top:1px solid #eee; display:flex; justify-content:space-between; font-weight:800; font-size:1.2rem; color:var(--primary)">
+                <span>Total Acumulado</span>
+                <span id="breakdownTotalAmount">S/ 0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/barber-panel.js"></script>
+</body>
+
+</html>
