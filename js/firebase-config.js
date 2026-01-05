@@ -1,21 +1,26 @@
 // Firebase configuration for Harry Barber
 const firebaseConfig = {
-    apiKey: "AIzaSyAqR2h5jG1KJ5tVJ9fQg3P7z6B8vX2Q0cE", // Replace with your actual API key
+    apiKey: "AIzaSyAQq8x-bEK4zFS1c482yNXT8-rwEIL8r0g",
     authDomain: "jarry-barber.firebaseapp.com",
-    databaseURL: "https://jarry-barber-default-rtdb.firebaseio.com/",
+    databaseURL: "https://jarry-barber-default-rtdb.firebaseio.com",
     projectId: "jarry-barber",
-    storageBucket: "jarry-barber.appspot.com",
-    messagingSenderId: "123456789", // Replace with your sender ID
-    appId: "1:123456789:web:abc123" // Replace with your app ID
+    storageBucket: "jarry-barber.firebasestorage.app",
+    messagingSenderId: "913159862387",
+    appId: "1:913159862387:web:f316c450a9b0687728d206",
+    measurementId: "G-N98YF4NX8C"
 };
 
 // Initialize Firebase
-if (typeof firebase !== 'undefined') {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
+try {
+    if (typeof firebase !== 'undefined' && typeof firebase.initializeApp === 'function') {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+    } else {
+        console.error('Firebase SDK not loaded. Please include the Firebase scripts in your HTML.');
     }
-} else {
-    console.error('Firebase SDK not loaded. Please include the Firebase scripts in your HTML.');
+} catch (error) {
+    console.error('Error initializing Firebase:', error);
 }
 
 const database = firebase?.database ? firebase.database() : null;
