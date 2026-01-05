@@ -27,6 +27,25 @@ document.addEventListener('DOMContentLoaded', async function () {
             haircutRef.on('value', () => {
                 loadHaircutTypes();
             });
+            
+            // Listen for changes in profile
+            const profileRef = db.ref('adminProfile');
+            profileRef.on('value', (snapshot) => {
+                const profile = snapshot.val();
+                if (profile) {
+                    localStorage.setItem('adminProfile', JSON.stringify(profile));
+                    loadProfile();
+                }
+            });
+            
+            // Listen for changes in PIN
+            const pinRef = db.ref('barberPin');
+            pinRef.on('value', (snapshot) => {
+                const pin = snapshot.val();
+                if (pin) {
+                    localStorage.setItem('barberPin', pin);
+                }
+            });
         }
     }
 
