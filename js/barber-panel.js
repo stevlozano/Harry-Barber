@@ -7,12 +7,26 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (window.FirebaseDataSync) {
         const firebaseSync = new FirebaseDataSync();
         await firebaseSync.initialize(() => {
-            // Callback when data is updated from Firebase
+            // Callback when reservations data is updated from Firebase
             refreshDashboard();
             loadReservations();
             loadHaircutTypes();
             loadPromotions();
         });
+        
+        // Listen for changes in promotions
+        if (database) {
+            const promoRef = database.ref('promotions');
+            promoRef.on('value', () => {
+                loadPromotions();
+            });
+            
+            // Listen for changes in haircut types
+            const haircutRef = database.ref('haircutTypes');
+            haircutRef.on('value', () => {
+                loadHaircutTypes();
+            });
+        }
     }
 
     // Initial Load
@@ -326,7 +340,22 @@ function deleteHaircut(id) {
         let haircuts = JSON.parse(localStorage.getItem('haircutTypes') || '[]');
         haircuts = haircuts.filter(h => h.id != id);
         localStorage.setItem('haircutTypes', JSON.stringify(haircuts));
+        
+        // Delete from Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            firebaseSync.deleteHaircutType(id);
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadHaircutTypes();
+        
+        // Refresh haircuts to ensure consistency across tabs
+        if (typeof loadHaircutTypes === 'function') {
+            loadHaircutTypes();
+        }
     }
 }
 
@@ -386,7 +415,22 @@ function deletePromotion(id) {
         let promos = JSON.parse(localStorage.getItem('promotions') || '[]');
         promos = promos.filter(p => p.id != id);
         localStorage.setItem('promotions', JSON.stringify(promos));
+        
+        // Delete from Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            firebaseSync.deletePromotion(id);
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadPromotions();
+        
+        // Refresh haircuts to ensure consistency across tabs
+        if (typeof loadHaircutTypes === 'function') {
+            loadHaircutTypes();
+        }
     }
 }
 
@@ -500,8 +544,27 @@ function setupFormListeners() {
         }
 
         localStorage.setItem('haircutTypes', JSON.stringify(haircuts));
+        
+        // Save to Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            if (id) {
+                firebaseSync.updateHaircutType(id, haircut);
+            } else {
+                firebaseSync.addHaircutType(haircut);
+            }
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadHaircutTypes();
         closeModal('haircutModal');
+        
+        // Refresh haircuts to ensure consistency across tabs
+        if (typeof loadHaircutTypes === 'function') {
+            loadHaircutTypes();
+        }
     });
 
     // Promotion Form
@@ -524,8 +587,27 @@ function setupFormListeners() {
         }
 
         localStorage.setItem('promotions', JSON.stringify(promos));
+        
+        // Save to Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            if (id) {
+                firebaseSync.updatePromotion(id, promo);
+            } else {
+                firebaseSync.addPromotion(promo);
+            }
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadPromotions();
         closeModal('promotionModal');
+        
+        // Refresh haircuts to ensure consistency across tabs
+        if (typeof loadHaircutTypes === 'function') {
+            loadHaircutTypes();
+        }
     });
 
     // Edit Reservation Form

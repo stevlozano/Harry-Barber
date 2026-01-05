@@ -168,6 +168,138 @@ class FirebaseDataSync {
             console.error('Error deleting reservation from Firebase:', error);
         }
     }
+    
+    // Get promotions from Firebase
+    async getPromotions() {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return [];
+        }
+        
+        try {
+            const promoRef = database.ref('promotions');
+            const snapshot = await promoRef.once('value');
+            const firebaseData = snapshot.val() || [];
+            return this.convertFirebaseToApp(firebaseData);
+        } catch (error) {
+            console.error('Error getting promotions from Firebase:', error);
+            return [];
+        }
+    }
+    
+    // Add a promotion to Firebase
+    async addPromotion(promotion) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const promoRef = database.ref('promotions');
+            await promoRef.child(promotion.id).set(promotion);
+            console.log('Promotion added to Firebase:', promotion.id);
+        } catch (error) {
+            console.error('Error adding promotion to Firebase:', error);
+        }
+    }
+    
+    // Update a promotion in Firebase
+    async updatePromotion(id, promotion) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const promoRef = database.ref('promotions');
+            await promoRef.child(id).update(promotion);
+            console.log('Promotion updated in Firebase:', id);
+        } catch (error) {
+            console.error('Error updating promotion in Firebase:', error);
+        }
+    }
+    
+    // Delete a promotion from Firebase
+    async deletePromotion(id) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const promoRef = database.ref('promotions');
+            await promoRef.child(id).remove();
+            console.log('Promotion deleted from Firebase:', id);
+        } catch (error) {
+            console.error('Error deleting promotion from Firebase:', error);
+        }
+    }
+    
+    // Get haircut types from Firebase
+    async getHaircutTypes() {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return [];
+        }
+        
+        try {
+            const haircutRef = database.ref('haircutTypes');
+            const snapshot = await haircutRef.once('value');
+            const firebaseData = snapshot.val() || [];
+            return this.convertFirebaseToApp(firebaseData);
+        } catch (error) {
+            console.error('Error getting haircut types from Firebase:', error);
+            return [];
+        }
+    }
+    
+    // Add a haircut type to Firebase
+    async addHaircutType(haircut) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const haircutRef = database.ref('haircutTypes');
+            await haircutRef.child(haircut.id).set(haircut);
+            console.log('Haircut type added to Firebase:', haircut.id);
+        } catch (error) {
+            console.error('Error adding haircut type to Firebase:', error);
+        }
+    }
+    
+    // Update a haircut type in Firebase
+    async updateHaircutType(id, haircut) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const haircutRef = database.ref('haircutTypes');
+            await haircutRef.child(id).update(haircut);
+            console.log('Haircut type updated in Firebase:', id);
+        } catch (error) {
+            console.error('Error updating haircut type in Firebase:', error);
+        }
+    }
+    
+    // Delete a haircut type from Firebase
+    async deleteHaircutType(id) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const haircutRef = database.ref('haircutTypes');
+            await haircutRef.child(id).remove();
+            console.log('Haircut type deleted from Firebase:', id);
+        } catch (error) {
+            console.error('Error deleting haircut type from Firebase:', error);
+        }
+    }
 }
 
 // Export for use in other files

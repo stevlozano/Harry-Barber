@@ -27,6 +27,25 @@ async function loadData() {
             }
         });
         
+        // Listen for changes in promotions and haircut types
+        if (database) {
+            const promoRef = database.ref('promotions');
+            promoRef.on('value', () => {
+                // Refresh haircut types to ensure consistency
+                if (typeof loadHaircutTypes === 'function') {
+                    loadHaircutTypes();
+                }
+            });
+            
+            const haircutRef = database.ref('haircutTypes');
+            haircutRef.on('value', () => {
+                // Refresh haircut types to ensure consistency
+                if (typeof loadHaircutTypes === 'function') {
+                    loadHaircutTypes();
+                }
+            });
+        }
+        
         console.log('Datos cargados desde Firebase:', state.reservations.length, 'reservas');
     } catch (error) {
         console.error('Error cargando datos de Firebase:', error);
