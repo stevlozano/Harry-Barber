@@ -95,6 +95,11 @@ function saveAppointment(appointment) {
         // Fallback notification
         localStorage.setItem('lastUpdate', Date.now().toString());
     }
+    
+    // Refresh dashboard if available
+    if (typeof refreshDashboard === 'function') {
+        refreshDashboard();
+    }
 }
 
 function updateAvailableTimes() {

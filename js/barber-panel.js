@@ -1,7 +1,19 @@
 // Comprehensive Barber Panel Logic
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     // Tab Switching Logic
     setupTabs();
+
+    // Initialize Firebase synchronization
+    if (window.FirebaseDataSync) {
+        const firebaseSync = new FirebaseDataSync();
+        await firebaseSync.initialize(() => {
+            // Callback when data is updated from Firebase
+            refreshDashboard();
+            loadReservations();
+            loadHaircutTypes();
+            loadPromotions();
+        });
+    }
 
     // Initial Load
     refreshDashboard();
@@ -245,6 +257,11 @@ function deleteReservation(id) {
         
         loadReservations();
         refreshDashboard();
+        
+        // Refresh haircuts to ensure consistency across tabs
+        if (typeof loadHaircutTypes === 'function') {
+            loadHaircutTypes();
+        }
     }
 }
 
@@ -546,9 +563,24 @@ function setupFormListeners() {
             }
 
             localStorage.setItem('reservations', JSON.stringify(reservations));
+            
+            // Update in Firebase if available
+            if (window.FirebaseDataSync) {
+                const firebaseSync = new FirebaseDataSync();
+                firebaseSync.updateReservation(id, reservations[idx]);
+            } else {
+                // Fallback notification
+                localStorage.setItem('lastUpdate', Date.now().toString());
+            }
+            
             loadReservations();
             refreshDashboard();
             closeModal('editReservationModal');
+            
+            // Refresh haircuts to ensure consistency across tabs
+            if (typeof loadHaircutTypes === 'function') {
+                loadHaircutTypes();
+            }
         }
     });
 

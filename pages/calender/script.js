@@ -20,6 +20,11 @@ async function loadData() {
             // Callback when data is updated from Firebase
             renderCalendar();
             renderReservations();
+            
+            // Update dashboard stats if on dashboard page
+            if (typeof refreshDashboard === 'function') {
+                refreshDashboard();
+            }
         });
         
         console.log('Datos cargados desde Firebase:', state.reservations.length, 'reservas');

@@ -292,6 +292,11 @@ function deleteAppointment(id) {
         }
         
         loadAppointments(); // Reload the appointments list
+        
+        // Refresh dashboard if available
+        if (typeof refreshDashboard === 'function') {
+            refreshDashboard();
+        }
     }
 }
 
