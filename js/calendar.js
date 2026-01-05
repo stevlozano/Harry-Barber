@@ -125,7 +125,7 @@ function renderCalendar(date) {
 // Update calendar days with appointment information
 function updateCalendarDays() {
     const calendarDays = document.querySelectorAll('.calendar-day:not(.other-month)');
-    const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    const appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
     
     calendarDays.forEach(dayElement => {
         // Get the date from the day number
@@ -176,15 +176,15 @@ function updateCalendarDays() {
 
 // Function to check if a time slot is available
 function isTimeSlotAvailable(date, time) {
-    const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    const appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
     const existingAppointment = appointments.find(app => app.date === date && app.time === time);
     return !existingAppointment;
 }
 
 // Function to get booked times for a specific date
 function getBookedTimesForDate(date) {
-    const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-    return reservations
+    const appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
+    return appointments
         .filter(app => app.date === date)
         .map(app => app.time);
 }

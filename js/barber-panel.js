@@ -234,10 +234,10 @@ function deleteReservation(id) {
         res = res.filter(r => r.id !== id);
         localStorage.setItem('reservations', JSON.stringify(res));
         
-        // Notify other tabs of the deletion
-        if (typeof DataSync !== 'undefined') {
-            const dataSync = new DataSync();
-            dataSync.notifyDataChange();
+        // Delete from Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            firebaseSync.deleteReservation(id);
         } else {
             // Fallback notification
             localStorage.setItem('lastUpdate', Date.now().toString());

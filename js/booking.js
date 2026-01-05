@@ -86,8 +86,15 @@ function saveAppointment(appointment) {
     const reservations = JSON.parse(localStorage.getItem('reservations') || '[]');
     reservations.push(appointment);
     localStorage.setItem('reservations', JSON.stringify(reservations));
-    // Notify other tabs of new appointment
-    localStorage.setItem('lastUpdate', Date.now().toString());
+    
+    // Save to Firebase if available
+    if (window.FirebaseDataSync) {
+        const firebaseSync = new FirebaseDataSync();
+        firebaseSync.addReservation(appointment);
+    } else {
+        // Fallback notification
+        localStorage.setItem('lastUpdate', Date.now().toString());
+    }
 }
 
 function updateAvailableTimes() {

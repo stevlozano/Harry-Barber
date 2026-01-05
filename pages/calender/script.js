@@ -1,38 +1,46 @@
 // Configuration
 const BARBER_WHATSAPP = '+51971853907';
 
-// State with enhanced data loading
+// State with Firebase data loading
 const state = {
     currentDate: new Date(),
     selectedDate: null,
     reservations: [],
     isLoading: true,
-    dataSync: new DataSync()
+    dataSync: null
 };
 
-// Load data using the synchronization utility (start empty)
+// Load data using Firebase synchronization
 async function loadData() {
     try {
+        // Initialize Firebase sync
+        state.dataSync = new FirebaseDataSync();
+        
         state.reservations = await state.dataSync.initialize(() => {
-            // Callback when data is updated from another tab
+            // Callback when data is updated from Firebase
             renderCalendar();
             renderReservations();
         });
         
-        console.log('Sistema iniciado vacío:', state.reservations.length, 'reservas');
+        console.log('Datos cargados desde Firebase:', state.reservations.length, 'reservas');
     } catch (error) {
-        console.error('Error iniciando sistema:', error);
-        // Start completely empty
-        state.reservations = [];
+        console.error('Error cargando datos de Firebase:', error);
+        // Fallback to localStorage
+        state.reservations = JSON.parse(localStorage.getItem('reservations') || []);
         localStorage.setItem('reservations', JSON.stringify(state.reservations));
     }
     state.isLoading = false;
 }
 
-// Save reservations using the synchronization utility
+// Save reservations using Firebase synchronization
 function saveReservations() {
     localStorage.setItem('reservations', JSON.stringify(state.reservations));
-    state.dataSync.notifyDataChange();
+    
+    // Save to Firebase if available
+    if (state.dataSync) {
+        state.dataSync.saveToFirebase(state.reservations);
+    }
+    
     console.log('Reservas guardadas:', state.reservations);
 }
 
@@ -358,6 +366,11 @@ function setupModalHandlers() {
         state.reservations.push(reservationData);
         saveReservations();
         sendWhatsAppMessage(reservationData);
+
+        // Add to Firebase if available
+        if (state.dataSync) {
+            state.dataSync.addReservation(reservationData);
+        }
 
         alert(`✅ ¡Reserva Confirmada para ${reservationData.nombre}!
 Fecha: ${reservationData.fecha}

@@ -281,6 +281,16 @@ function deleteAppointment(id) {
         let appointments = JSON.parse(localStorage.getItem('reservations') || '[]');
         appointments = appointments.filter(app => app.id !== id);
         localStorage.setItem('reservations', JSON.stringify(appointments));
+        
+        // Delete from Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            firebaseSync.deleteReservation(id);
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadAppointments(); // Reload the appointments list
     }
 }
