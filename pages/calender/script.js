@@ -28,8 +28,9 @@ async function loadData() {
         });
         
         // Listen for changes in promotions and haircut types
-        if (database) {
-            const promoRef = database.ref('promotions');
+        if (window.firebase && window.firebase.database) {
+            const db = window.firebase.database();
+            const promoRef = db.ref('promotions');
             promoRef.on('value', () => {
                 // Refresh haircut types to ensure consistency
                 if (typeof loadHaircutTypes === 'function') {
@@ -37,7 +38,7 @@ async function loadData() {
                 }
             });
             
-            const haircutRef = database.ref('haircutTypes');
+            const haircutRef = db.ref('haircutTypes');
             haircutRef.on('value', () => {
                 // Refresh haircut types to ensure consistency
                 if (typeof loadHaircutTypes === 'function') {
