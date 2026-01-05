@@ -14,21 +14,47 @@ document.addEventListener('DOMContentLoaded', async function () {
             loadPromotions();
         });
         
-        // Listen for changes in promotions
-        if (database) {
-            const promoRef = database.ref('promotions');
+        // Listen for changes in promotions and haircut types
+        if (window.firebase && window.firebase.database) {
+            const db = window.firebase.database();
+            const promoRef = db.ref('promotions');
             promoRef.on('value', () => {
                 loadPromotions();
             });
             
             // Listen for changes in haircut types
-            const haircutRef = database.ref('haircutTypes');
+            const haircutRef = db.ref('haircutTypes');
             haircutRef.on('value', () => {
                 loadHaircutTypes();
             });
         }
     }
 
+    // Initial Load from Firebase if available
+    if (window.FirebaseDataSync) {
+        const firebaseSync = new FirebaseDataSync();
+        // Load initial data from Firebase
+        await firebaseSync.getReservations().then(reservations => {
+            localStorage.setItem('reservations', JSON.stringify(reservations));
+        }).catch(() => {
+            // Fallback to localStorage
+        });
+        
+        // Load promotions from Firebase
+        await firebaseSync.getPromotions().then(promotions => {
+            localStorage.setItem('promotions', JSON.stringify(promotions));
+        }).catch(() => {
+            // Fallback to localStorage
+        });
+        
+        // Load haircut types from Firebase
+        await firebaseSync.getHaircutTypes().then(haircuts => {
+            localStorage.setItem('haircutTypes', JSON.stringify(haircuts));
+        }).catch(() => {
+            // Fallback to localStorage
+        });
+    }
+    
     // Initial Load
     refreshDashboard();
     loadReservations();
