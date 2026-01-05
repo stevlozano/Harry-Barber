@@ -1,5 +1,5 @@
 // Configuration
-const BARBER_WHATSAPP = '5197185907';
+const BARBER_WHATSAPP = '+51971853907';
 
 // State with enhanced data loading
 const state = {
