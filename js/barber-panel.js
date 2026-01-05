@@ -53,6 +53,22 @@ document.addEventListener('DOMContentLoaded', async function () {
         }).catch(() => {
             // Fallback to localStorage
         });
+        
+        // Load profile from Firebase
+        await firebaseSync.getProfile().then(profile => {
+            localStorage.setItem('adminProfile', JSON.stringify(profile));
+        }).catch(() => {
+            // Fallback to localStorage
+        });
+        
+        // Load PIN from Firebase
+        await firebaseSync.getPin().then(pin => {
+            if (pin) {
+                localStorage.setItem('barberPin', pin);
+            }
+        }).catch(() => {
+            // Fallback to localStorage
+        });
     }
     
     // Initial Load
@@ -496,6 +512,16 @@ function updateProfilePhoto(input) {
             const profile = JSON.parse(localStorage.getItem('adminProfile') || '{"name": "Harry Barber", "photo": ""}');
             profile.photo = photo;
             localStorage.setItem('adminProfile', JSON.stringify(profile));
+            
+            // Save to Firebase if available
+            if (window.FirebaseDataSync) {
+                const firebaseSync = new FirebaseDataSync();
+                firebaseSync.updateProfile(profile);
+            } else {
+                // Fallback notification
+                localStorage.setItem('lastUpdate', Date.now().toString());
+            }
+            
             loadProfile();
         };
         reader.readAsDataURL(input.files[0]);
@@ -527,6 +553,16 @@ function setupFormListeners() {
         const profile = JSON.parse(localStorage.getItem('adminProfile') || '{"name": "Harry Barber", "photo": ""}');
         profile.name = document.getElementById('profileName').value;
         localStorage.setItem('adminProfile', JSON.stringify(profile));
+        
+        // Save to Firebase if available
+        if (window.FirebaseDataSync) {
+            const firebaseSync = new FirebaseDataSync();
+            firebaseSync.updateProfile(profile);
+        } else {
+            // Fallback notification
+            localStorage.setItem('lastUpdate', Date.now().toString());
+        }
+        
         loadProfile();
         alert('Perfil actualizado correctamente');
     });
@@ -541,6 +577,16 @@ function setupFormListeners() {
 
         if (pin.length === 4) {
             localStorage.setItem('barberPin', pin);
+            
+            // Save to Firebase if available
+            if (window.FirebaseDataSync) {
+                const firebaseSync = new FirebaseDataSync();
+                firebaseSync.updatePin(pin);
+            } else {
+                // Fallback notification
+                localStorage.setItem('lastUpdate', Date.now().toString());
+            }
+            
             alert('PIN actualizado correctamente');
             document.querySelectorAll('.pin-digit').forEach(input => input.value = '');
         } else {

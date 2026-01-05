@@ -300,6 +300,72 @@ class FirebaseDataSync {
             console.error('Error deleting haircut type from Firebase:', error);
         }
     }
+    
+    // Update profile in Firebase
+    async updateProfile(profile) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const profileRef = database.ref('adminProfile');
+            await profileRef.set(profile);
+            console.log('Profile updated in Firebase');
+        } catch (error) {
+            console.error('Error updating profile in Firebase:', error);
+        }
+    }
+    
+    // Update PIN in Firebase
+    async updatePin(pin) {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return;
+        }
+        
+        try {
+            const pinRef = database.ref('barberPin');
+            await pinRef.set(pin);
+            console.log('PIN updated in Firebase');
+        } catch (error) {
+            console.error('Error updating PIN in Firebase:', error);
+        }
+    }
+    
+    // Get profile from Firebase
+    async getProfile() {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return {"name": "Harry Barber", "photo": ""};
+        }
+        
+        try {
+            const profileRef = database.ref('adminProfile');
+            const snapshot = await profileRef.once('value');
+            return snapshot.val() || {"name": "Harry Barber", "photo": ""};
+        } catch (error) {
+            console.error('Error getting profile from Firebase:', error);
+            return {"name": "Harry Barber", "photo": ""};
+        }
+    }
+    
+    // Get PIN from Firebase
+    async getPin() {
+        if (!database) {
+            console.error('Firebase not initialized');
+            return null;
+        }
+        
+        try {
+            const pinRef = database.ref('barberPin');
+            const snapshot = await pinRef.once('value');
+            return snapshot.val();
+        } catch (error) {
+            console.error('Error getting PIN from Firebase:', error);
+            return null;
+        }
+    }
 }
 
 // Export for use in other files
