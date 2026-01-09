@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Sistema de reservas para peluquería Jarry Barber con sincronización en tiempo real">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Jarry Barber">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
     <title>Jarry Barber | Sitio Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -321,6 +328,9 @@
                 <a href="/index.html" class="active">Inicio</a>
                 <a href="/pages/calender/calender.html">Reservar</a>
                 <a href="javascript:void(0)" onclick="openBarberAuth()">Barbero</a>
+                <button id="installButton" style="display:none; background:#000; color:#fff; border:none; padding:10px 20px; border-radius:20px; cursor:pointer; font-weight:600;" onclick="installApp()">
+                    Instalar App
+                </button>
             </nav>
         </header>
 
@@ -450,7 +460,62 @@
 
         function showError(msg) {
             pinError.textContent = msg;
-            pinError.style.display = 'block';
+            pinError.style.display = "block";
+        }
+
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('installButton');
+            if (installBtn) {
+                installBtn.style.display = 'inline-block';
+            }
+        });
+
+        window.installApp = function() {
+            const installBtn = document.getElementById('installButton');
+            if (installBtn) {
+                installBtn.style.display = 'none';
+            }
+            
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        };
+
+        // Register PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New update available
+                                    if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
         }
     </script>
 </body>
