@@ -1012,6 +1012,3 @@ function logout() {
 }
 
 window.logout = logout;
-window.openAdditionalServiceModal = openAdditionalServiceModal;
-window.editAdditionalService = editAdditionalService;
-window.deleteAdditionalService = deleteAdditionalService;
