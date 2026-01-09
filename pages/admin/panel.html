@@ -41,6 +41,10 @@
                 <span class="material-symbols-outlined">sell</span>
                 <small>Promos</small>
             </button>
+            <button class="nav-btn" data-tab="services">
+                <span class="material-symbols-outlined">spa</span>
+                <small>Servicios</small>
+            </button>
             <button class="nav-btn" data-tab="settings">
                 <span class="material-symbols-outlined">settings</span>
                 <small>Ajustes</small>
@@ -71,6 +75,10 @@
                 <button class="nav-item" data-tab="promotions">
                     <span class="material-symbols-outlined">sell</span>
                     Promociones
+                </button>
+                <button class="nav-item" data-tab="services">
+                    <span class="material-symbols-outlined">spa</span>
+                    Servicios Adicionales
                 </button>
                 <button class="nav-item" data-tab="settings">
                     <span class="material-symbols-outlined">settings</span>
@@ -205,6 +213,35 @@
                 </div>
                 <div class="promotions-grid" id="adminPromotionsGrid">
                     <!-- Promotions will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Additional Services Tab -->
+            <section class="tab-content" id="servicesTab">
+                <div class="action-bar">
+                    <h2>Gestionar Servicios Adicionales</h2>
+                    <button class="btn-primary" onclick="openAdditionalServiceModal()">
+                        <span class="material-symbols-outlined">add</span>
+                        Nuevo Servicio
+                    </button>
+                </div>
+                <div class="services-categories-container">
+                    <div class="category-section" id="eyebrowsCategory">
+                        <h3>Cejas</h3>
+                        <div class="services-grid" id="eyebrowsServicesGrid"></div>
+                    </div>
+                    <div class="category-section" id="beardCategory">
+                        <h3>Barba</h3>
+                        <div class="services-grid" id="beardServicesGrid"></div>
+                    </div>
+                    <div class="category-section" id="spaCategory">
+                        <h3>SPA</h3>
+                        <div class="services-grid" id="spaServicesGrid"></div>
+                    </div>
+                    <div class="category-section" id="additionalCategory">
+                        <h3>Adicionales</h3>
+                        <div class="services-grid" id="additionalServicesGrid"></div>
+                    </div>
                 </div>
             </section>
 
@@ -435,12 +472,47 @@
         </div>
     </div>
 
+    <!-- Additional Service Modal -->
+    <div id="additionalServiceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('additionalServiceModal')">&times;</span>
+            <h2 id="serviceModalTitle">Nuevo Servicio Adicional</h2>
+            <form id="additionalServiceForm">
+                <input type="hidden" id="serviceId">
+                <div class="form-group">
+                    <label for="serviceCategory">Categoría</label>
+                    <select id="serviceCategory" required>
+                        <option value="">Seleccionar categoría</option>
+                        <option value="cejas">Cejas</option>
+                        <option value="barba">Barba</option>
+                        <option value="spa">SPA</option>
+                        <option value="adicional">Adicional</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="serviceName">Nombre del Servicio</label>
+                    <input type="text" id="serviceName" required placeholder="Ej: Cejas Deluxe">
+                </div>
+                <div class="form-group">
+                    <label for="servicePrice">Precio (S/)</label>
+                    <input type="number" id="servicePrice" step="0.01" min="0" required placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label for="serviceDescription">Descripción</label>
+                    <textarea id="serviceDescription" rows="3" required placeholder="Describe el servicio..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Guardar Servicio</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
     <script src="../../js/data-sync.js"></script>
     <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/additional-services.js"></script>
     <script src="../../js/barber-panel.js"></script>
 </body>
 

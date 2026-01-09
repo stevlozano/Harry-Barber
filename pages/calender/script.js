@@ -303,6 +303,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderReservations();
     loadHaircutTypes(); // Load types from localStorage
     
+    // Load additional services with Firebase readiness check
+    function initAdditionalServices() {
+        if (typeof additionalServices !== 'undefined' && typeof window.firebase !== 'undefined') {
+            console.log('Firebase and additionalServices ready, loading services');
+            loadAdditionalServices();
+            additionalServices.initializeFirebaseSync();
+        } else {
+            console.log('Waiting for Firebase initialization...');
+            setTimeout(initAdditionalServices, 500);
+        }
+    }
+    
+    // Start the initialization process
+    initAdditionalServices();
+    
     // Setup tab synchronization
     setupTabSync();
 });
@@ -365,7 +380,20 @@ function setupModalHandlers() {
 
         const serviceSelect = document.getElementById('cutTypeInput');
         const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-        const price = selectedOption ? parseFloat(selectedOption.dataset.price) : 0;
+        const basePrice = selectedOption ? parseFloat(selectedOption.dataset.price) : 0;
+        
+        // Get selected additional services
+        const selectedServices = getSelectedAdditionalServices();
+        
+        // Calculate total price
+        const totalPrice = additionalServices.calculateTotalPrice(basePrice, selectedServices);
+        
+        // Format service description
+        let serviceDescription = serviceSelect.value;
+        if (selectedServices.length > 0) {
+            const additionalServicesText = additionalServices.formatServiceDisplay(selectedServices);
+            serviceDescription += ' + ' + additionalServicesText;
+        }
 
         const reservationData = {
             id: Date.now().toString(),
@@ -373,12 +401,14 @@ function setupModalHandlers() {
             hora: document.getElementById('timeInput').value,
             nombre: document.getElementById('nameInput').value,
             whatsapp: document.getElementById('whatsappInput').value,
-            corte: serviceSelect.value,
+            corte: serviceDescription,
+            additionalServices: selectedServices, // Store selected additional services
+            basePrice: basePrice, // Store base price
+            price: totalPrice, // Total calculated price
             pago: document.getElementById('paymentInput').value,
-            price: price, // Added price
-            status: 'pendiente', // Default status
-            paymentStatus: 'pendiente', // Default payment status
-            paymentMethod: document.getElementById('paymentInput').value, // Standardized
+            status: 'pendiente',
+            paymentStatus: 'pendiente',
+            paymentMethod: document.getElementById('paymentInput').value,
             createdAt: new Date().toISOString()
         };
 
@@ -523,3 +553,163 @@ function setupTabSync() {
     // Tab synchronization is now handled by DataSync utility
     console.log('Tab synchronization managed by DataSync utility');
 }
+
+// Additional Services Functions
+function loadAdditionalServices() {
+    const container = document.getElementById('additionalServicesContainer');
+    if (!container) return;
+    
+    // Clear container
+    container.innerHTML = '';
+    
+    // Check if additionalServices is properly initialized
+    if (typeof additionalServices === 'undefined' || !additionalServices.services) {
+        console.warn('Additional services not initialized yet, using default services');
+        // Use default services temporarily
+        loadDefaultServices(container);
+        return;
+    }
+    
+    // Get all categories
+    const categories = additionalServices.getAllCategories();
+    
+    // Create service options for each category
+    categories.forEach(category => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'service-category';
+        
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.textContent = category.name;
+        categoryDiv.appendChild(header);
+        
+        // Get services for this category
+        const services = additionalServices.getServicesByCategory(category.id);
+        
+        services.forEach(service => {
+            const serviceDiv = document.createElement('div');
+            serviceDiv.className = 'service-option';
+            serviceDiv.dataset.serviceId = service.id;
+            
+            serviceDiv.innerHTML = `
+                <input type="checkbox" class="service-checkbox" id="${service.id}">
+                <div class="service-info">
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-description">${service.description}</div>
+                    <div class="service-price">S/ ${service.price.toFixed(2)}</div>
+                </div>
+            `;
+            
+            // Add click handler
+            serviceDiv.addEventListener('click', function(e) {
+                if (e.target.type !== 'checkbox') {
+                    const checkbox = this.querySelector('.service-checkbox');
+                    checkbox.checked = !checkbox.checked;
+                    updateSelectedState(this, checkbox.checked);
+                } else {
+                    updateSelectedState(this, e.target.checked);
+                }
+                updateTotalPrice();
+            });
+            
+            categoryDiv.appendChild(serviceDiv);
+        });
+        
+        container.appendChild(categoryDiv);
+    });
+    
+    // Add event listeners to checkboxes
+    container.addEventListener('change', function(e) {
+        if (e.target.type === 'checkbox') {
+            const serviceOption = e.target.closest('.service-option');
+            updateSelectedState(serviceOption, e.target.checked);
+            updateTotalPrice();
+        }
+    });
+}
+
+function updateSelectedState(element, isSelected) {
+    if (isSelected) {
+        element.classList.add('selected');
+    } else {
+        element.classList.remove('selected');
+    }
+}
+
+function updateTotalPrice() {
+    const cutTypeSelect = document.getElementById('cutTypeInput');
+    const selectedCutOption = cutTypeSelect.options[cutTypeSelect.selectedIndex];
+    const basePrice = selectedCutOption && selectedCutOption.dataset.price ? 
+        parseFloat(selectedCutOption.dataset.price) : 0;
+    
+    // Get selected additional services
+    const selectedServices = [];
+    const checkboxes = document.querySelectorAll('.service-checkbox:checked');
+    
+    checkboxes.forEach(checkbox => {
+        const serviceId = checkbox.id;
+        selectedServices.push(serviceId);
+    });
+    
+    // Calculate total price
+    const totalPrice = additionalServices.calculateTotalPrice(basePrice, selectedServices);
+    
+    // Update display
+    const totalPriceElement = document.getElementById('totalPriceAmount');
+    if (totalPriceElement) {
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+    }
+    
+    // Store selected services in form data
+    const form = document.getElementById('bookingForm');
+    if (form) {
+        form.dataset.selectedServices = JSON.stringify(selectedServices);
+        form.dataset.totalPrice = totalPrice.toFixed(2);
+    }
+}
+
+function getSelectedAdditionalServices() {
+    const form = document.getElementById('bookingForm');
+    if (form && form.dataset.selectedServices) {
+        return JSON.parse(form.dataset.selectedServices);
+    }
+    return [];
+}
+
+function loadDefaultServices(container) {
+    container.innerHTML = `
+        <div style="text-align: center; padding: 30px; color: #666;">
+            <div style="font-size: 48px; margin-bottom: 20px;">✂️</div>
+            <h3 style="margin-bottom: 15px; color: #333;">Sin Servicios Adicionales</h3>
+            <p style="margin-bottom: 20px; line-height: 1.5;">
+                El administrador aún no ha creado servicios adicionales.<br>
+                Solo se mostrarán los cortes principales.
+            </p>
+            <button onclick="window.open('/pages/admin/panel.html', '_blank')" 
+                    style="background: #000; color: white; border: none; padding: 12px 24px; border-radius: 20px; cursor: pointer; font-weight: 600;">
+                Ir al Panel de Admin
+            </button>
+        </div>
+    `;
+}
+
+// Update the form submission to include additional services
+function updateBookingFormSubmission() {
+    const form = document.getElementById('bookingForm');
+    if (!form) return;
+    
+    // Update cut type selection to trigger price update
+    const cutTypeSelect = document.getElementById('cutTypeInput');
+    if (cutTypeSelect) {
+        cutTypeSelect.addEventListener('change', updateTotalPrice);
+    }
+    
+    // Initial price update
+    setTimeout(updateTotalPrice, 100);
+}
+
+// Call this after DOM loads
+setTimeout(updateBookingFormSubmission, 500);
+
+// Export function for external access
+window.loadAdditionalServices = loadAdditionalServices;

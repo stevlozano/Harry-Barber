@@ -126,6 +126,7 @@ function setupTabs() {
             if (tabId === 'reservations') loadReservations();
             if (tabId === 'haircuts') loadHaircutTypes();
             if (tabId === 'promotions') loadPromotions();
+            if (tabId === 'services') loadAdditionalServices();
             if (tabId === 'settings') loadProfile();
         });
     });
@@ -868,6 +869,142 @@ window.openPromotionModal = openPromotionModal;
 window.updateProfilePhoto = updateProfilePhoto;
 window.openReservationDetail = openReservationDetail;window.openRevenueDetails = openRevenueDetails;
 
+// --- Additional Services Logic ---
+function loadAdditionalServices() {
+    // Load services from the AdditionalServices class
+    const services = additionalServices.services || [];
+    
+    // Get grid containers for each category
+    const eyebrowsGrid = document.getElementById('eyebrowsServicesGrid');
+    const beardGrid = document.getElementById('beardServicesGrid');
+    const spaGrid = document.getElementById('spaServicesGrid');
+    const additionalGrid = document.getElementById('additionalServicesGrid');
+    
+    // Clear all grids
+    if (eyebrowsGrid) eyebrowsGrid.innerHTML = '';
+    if (beardGrid) beardGrid.innerHTML = '';
+    if (spaGrid) spaGrid.innerHTML = '';
+    if (additionalGrid) additionalGrid.innerHTML = '';
+    
+    // Render services by category
+    services.forEach(service => {
+        const card = createServiceCard(service);
+        
+        switch(service.category) {
+            case 'cejas':
+                if (eyebrowsGrid) eyebrowsGrid.appendChild(card);
+                break;
+            case 'barba':
+                if (beardGrid) beardGrid.appendChild(card);
+                break;
+            case 'spa':
+                if (spaGrid) spaGrid.appendChild(card);
+                break;
+            case 'adicional':
+                if (additionalGrid) additionalGrid.appendChild(card);
+                break;
+        }
+    });
+    
+    // Show "no services" message if category is empty
+    if (eyebrowsGrid && eyebrowsGrid.children.length === 0) {
+        eyebrowsGrid.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted)">No hay servicios de cejas</p>';
+    }
+    if (beardGrid && beardGrid.children.length === 0) {
+        beardGrid.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted)">No hay servicios de barba</p>';
+    }
+    if (spaGrid && spaGrid.children.length === 0) {
+        spaGrid.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted)">No hay servicios de SPA</p>';
+    }
+    if (additionalGrid && additionalGrid.children.length === 0) {
+        additionalGrid.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted)">No hay servicios adicionales</p>';
+    }
+}
+
+function createServiceCard(service) {
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.innerHTML = `
+        <div class="service-card-header">
+            <h4>${service.name}</h4>
+            <div class="service-price-tag">S/ ${parseFloat(service.price).toFixed(2)}</div>
+        </div>
+        <div class="service-description">${service.description}</div>
+        <div class="service-actions">
+            <button class="btn-service-edit" onclick="editAdditionalService('${service.id}')">
+                <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn-service-delete" onclick="deleteAdditionalService('${service.id}')">
+                <span class="material-symbols-outlined">delete</span>
+            </button>
+        </div>
+    `;
+    return card;
+}
+
+function openAdditionalServiceModal() {
+    document.getElementById('additionalServiceForm').reset();
+    document.getElementById('serviceId').value = '';
+    document.getElementById('serviceModalTitle').textContent = 'Nuevo Servicio Adicional';
+    document.getElementById('additionalServiceModal').style.display = 'flex';
+}
+
+function editAdditionalService(id) {
+    const service = additionalServices.getServiceById(id);
+    if (!service) return;
+    
+    document.getElementById('serviceId').value = service.id;
+    document.getElementById('serviceCategory').value = service.category;
+    document.getElementById('serviceName').value = service.name;
+    document.getElementById('servicePrice').value = service.price;
+    document.getElementById('serviceDescription').value = service.description;
+    
+    document.getElementById('serviceModalTitle').textContent = 'Editar Servicio Adicional';
+    document.getElementById('additionalServiceModal').style.display = 'flex';
+}
+
+function deleteAdditionalService(id) {
+    if (confirm('¿Eliminar este servicio adicional?')) {
+        additionalServices.deleteService(id);
+        loadAdditionalServices();
+    }
+}
+
+// Add form submission listener for additional services
+function setupAdditionalServicesForm() {
+    const form = document.getElementById('additionalServiceForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('serviceId').value;
+            const serviceData = {
+                category: document.getElementById('serviceCategory').value,
+                name: document.getElementById('serviceName').value,
+                price: parseFloat(document.getElementById('servicePrice').value),
+                description: document.getElementById('serviceDescription').value
+            };
+            
+            if (id) {
+                // Edit existing service
+                additionalServices.updateService(id, serviceData);
+            } else {
+                // Add new service
+                additionalServices.addService(serviceData);
+            }
+            
+            loadAdditionalServices();
+            closeModal('additionalServiceModal');
+        });
+    }
+}
+
+// Initialize additional services form when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for additionalServices to be initialized
+    setTimeout(setupAdditionalServicesForm, 1000);
+});
+
 function logout() {
     if (confirm('¿Estás seguro de que deseas cerrar tu sesión?')) {
         window.location.href = '/index.html';
@@ -875,3 +1012,6 @@ function logout() {
 }
 
 window.logout = logout;
+window.openAdditionalServiceModal = openAdditionalServiceModal;
+window.editAdditionalService = editAdditionalService;
+window.deleteAdditionalService = deleteAdditionalService;

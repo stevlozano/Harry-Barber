@@ -800,3 +800,122 @@ h1.welcome-title {
         padding: 15px 10px;
     }
 }
+
+/* Additional Services Styles */
+.additional-services-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    background: #f9f9f9;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.service-category {
+    margin-bottom: 20px;
+}
+
+.category-header {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.service-option {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.service-option:hover {
+    border-color: #000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-option.selected {
+    border-color: #000;
+    background: #000;
+    color: white;
+}
+
+.service-checkbox {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+    accent-color: #000;
+}
+
+.service-info {
+    flex: 1;
+}
+
+.service-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.service-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.service-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+}
+
+.service-option.selected .service-description,
+.service-option.selected .service-price {
+    color: #ccc;
+}
+
+.total-price-display {
+    margin-top: 20px;
+    padding: 15px;
+    background: #000;
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.total-price-display strong {
+    font-size: 18px;
+}
+
+/* Mobile adjustments for additional services */
+@media (max-width: 768px) {
+    .additional-services-container {
+        padding: 12px;
+        max-height: 250px;
+    }
+    
+    .service-option {
+        padding: 10px;
+    }
+    
+    .service-name {
+        font-size: 14px;
+    }
+    
+    .total-price-display {
+        padding: 12px;
+    }
+    
+    .total-price-display strong {
+        font-size: 16px;
+    }
+}

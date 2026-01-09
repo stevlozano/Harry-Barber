@@ -125,9 +125,9 @@
 
                 <!-- Service Details -->
                 <div class="form-group">
-                    <label class="form-label">Tipo de Corte</label>
+                    <label class="form-label">Tipo de Corte Principal</label>
                     <select id="cutTypeInput" class="form-select" required>
-                        <option value="" disabled selected>Seleccionar servicio</option>
+                        <option value="" disabled selected>Seleccionar servicio principal</option>
                         <option value="clasico">Corte Clásico</option>
                         <option value="degradado">Degradado / Fade</option>
                         <option value="barba">Diseño de Barba</option>
@@ -136,14 +136,23 @@
                     </select>
                 </div>
 
+                <!-- Additional Services Selection -->
+                <div class="form-group">
+                    <label class="form-label">Servicios Adicionales</label>
+                    <div class="additional-services-container" id="additionalServicesContainer">
+                        <!-- Services will be loaded here dynamically -->
+                    </div>
+                    <div class="total-price-display" id="totalPriceDisplay">
+                        <strong>Total: S/ <span id="totalPriceAmount">0.00</span></strong>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="form-label">Método de Pago</label>
                     <select id="paymentInput" class="form-select" required>
                         <option value="" disabled selected>Seleccionar pago</option>
                         <option value="yape">Yape</option>
-                        <option value="plin">Plin</option>
                         <option value="efectivo">Efectivo</option>
-                        <option value="tarjeta">Tarjeta</option>
                     </select>
                 </div>
 
@@ -206,6 +215,7 @@
     
     <script src="../../js/data-sync.js"></script>
     <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/additional-services.js"></script>
     <script src="script.js"></script>
 </body>
 
