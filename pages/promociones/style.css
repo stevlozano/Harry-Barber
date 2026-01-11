@@ -290,9 +290,10 @@ h1.welcome-title {
 
     .navbar {
         width: 95%;
-        max-width: 350px;
+        max-width: 260px;
         right: 2.5%;
         left: auto;
+        right: 45px;
         transform: none;
     }
 
