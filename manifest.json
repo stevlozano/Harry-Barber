@@ -1,7 +1,7 @@
 {
-  "name": "Harry Barber - Sistema de Reservas",
-  "short_name": "Harry Barber",
-  "description": "Sistema de reservas para peluquería con sincronización en tiempo real",
+  "name": "Jarry Style - Sistema de Reservas",
+  "short_name": "Jarry Style",
+  "description": "Sistema de reservas para barbería con sincronización en tiempo real",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

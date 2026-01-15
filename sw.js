@@ -1,5 +1,5 @@
-// Service Worker for Harry Barber PWA
-const CACHE_NAME = 'harry-barber-v1.0.10';
+// Service Worker for Jarry Style PWA
+const CACHE_NAME = 'jarry-style-v1.0.10';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -8,21 +8,22 @@ const urlsToCache = [
   '/pages/tipos-corte/tipos-corte.html',
   '/pages/promociones/promociones.html',
   '/pages/historial/story.html',
-  '/js/main.js',
-  '/js/calendar.js',
   '/js/booking.js',
-  '/js/encryption.js',
-  '/js/data-sync.js',
-  '/js/firebase-config.js',
-  '/js/barber-panel.js',
+  '/js/calendar.js',
   '/js/additional-services.js',
+  '/js/data-sync.js',
+  '/js/encryption.js',
   '/pages/calender/script.js',
+  '/frontend-cache.js',
+  '/update-config.js',
+  '/cache-manager.js',
   '/pages/calender/style.css',
   '/pages/admin/style.css',
   '/pages/promociones/style.css',
   '/pages/tipos-corte/style.css',
   '/pages/historial/style.css',
-  '/images/logo/logo.png',
+  '/images/logo/stylejarry.png',
+  '/images/JERRYSTYLE.png',
   '/manifest.json'
 ];
 
@@ -68,7 +69,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('push', (event) => {
   if (event.data) {
     const data = event.data.json();
-    const title = data.title || 'Harry Barber';
+    const title = data.title || 'Jarry Style';
     const options = {
       body: data.body || 'Nueva actualización disponible',
       icon: '/images/icons/icon-192x192.png',
