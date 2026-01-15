@@ -71,6 +71,13 @@ Based on desktop positioning system but adapted for smaller screens
     border-radius: 25px;          /* Match section style */
 }
 
+.mapa{
+    padding: 20px 15px;
+    width: 430px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
 /* FOOTER - Tablet */
 .footer-tablet {
     /* Position: Bottom of page */
