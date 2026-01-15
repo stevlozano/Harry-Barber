@@ -1,403 +1,145 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Sistema de reservas para peluquería Jarry Barber con sincronización en tiempo real">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Jarry Barber">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
-    <title>Jarry Barber | Sitio Oficial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --blanco: #ffffff;
-            --negro: #000000;
-            --gris-claro: #f1f1f1;
-            --gris-texto: #444444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--negro);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-top: 40px;
-            /* Espacio superior para la tarjeta */
-        }
-
-        /* 1. La Tarjeta Blanca Principal */
-        .main-card {
-            background-color: var(--blanco);
-            width: 100%;
-            max-width: 1780px;
-            border-radius: 40px;
-            padding: 20px 40px 60px 40px;
-            margin-bottom: 40px;
-            /* Espacio antes del footer */
-        }
-
-        /* Navegación */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-        }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .icon-circle {
-            border: 1px solid var(--negro);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.1rem;
-        }
-
-        .logo-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        nav {
-            background-color: var(--gris-claro);
-            padding: 6px;
-            border-radius: 40px;
-            display: flex;
-            gap: 5px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--negro);
-            padding: 10px 28px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        nav a.active {
-            background-color: var(--blanco);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Imagen y Texto */
-        .hero-image {
-            width: 100%;
-            height: 700px;
-            border-radius: 30px;
-            margin-bottom: 40px;
-        }
-
-        .info-content h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-        }
-
-        .info-content p {
-            color: var(--gris-texto);
-            font-size: 1.15rem;
-            line-height: 1.5;
-            margin-bottom: 30px;
-            max-width: 850px;
-        }
-
-        .info-content .bold-footer-text {
-            color: var(--negro);
-            font-weight: 700;
-        }
-
-        /* 2. El Footer (FUERA DE LA TARJETA) */
-        footer {
-            width: 100%;
-            max-width: 1780px;
-            padding: 40px 20px;
-            color: var(--blanco);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 40px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .footer-logo .icon-circle {
-            border-color: var(--blanco);
-        }
-
-        .social-box {
-            text-align: right;
-        }
-
-        .social-box h4 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .fb-icon {
-            color: var(--blanco);
-            font-size: 1.8rem;
-            text-decoration: none;
-        }
-
-        .copyright-bar {
-            border-top: 1px solid #333;
-            padding-top: 20px;
-            font-size: 0.75rem;
-            color: #666;
-        }
-
-        /* Responsividad */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 40px;
-                align-items: center;
-                text-align: center;
-            }
-
-            .social-box {
-                text-align: center;
-            }
-
-            .main-card {
-                padding: 20px;
-            }
-        }
-
-        /* PIN Modal Styles */
-        .pin-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(20px);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .pin-container {
-            background: white;
-            padding: 60px 40px;
-            border-radius: 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pin-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, #000, #D4AF37);
-        }
-
-        .pin-container h2 {
-            margin-bottom: 12px;
-            font-weight: 800;
-            font-size: 28px;
-            letter-spacing: -1px;
-        }
-
-        .pin-inputs {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 40px 0;
-        }
-
-        .pin-digit {
-            width: 65px;
-            height: 80px;
-            border: 2px solid #f1f1f1;
-            border-radius: 20px;
-            font-size: 32px;
-            text-align: center;
-            font-weight: 800;
-            background: #f9f9f9;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .pin-digit:focus {
-            border-color: #000;
-            background: #fff;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            outline: none;
-        }
-
-        .btn-pin {
-            background: #000;
-            color: #fff;
-            border: none;
-            padding: 18px 30px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-pin:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        #pinError {
-            color: #ef4444;
-            margin-top: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            display: none;
-        }
-    </style>
+    <title>Jarry Style</title>
+    <!-- css -->
+     <link rel="stylesheet" href="/css/style2.css">
+     <!-- font google -->
 </head>
-
 <body>
-
-    <div class="main-card">
-        <header>
-            <div class="logo-box">
-                <div class="icon-circle"><i class="fas fa-scissors"></i></div>
-                <span class="logo-name">Harry Barber</span>
-            </div>
-            <nav>
-                <a href="/index.html" class="active">Inicio</a>
-                <a href="/pages/calender/calender.html">Reservar</a>
-                <a href="javascript:void(0)" onclick="openBarberAuth()">Barbero</a>
-                <button id="installButton" style="display:none; background:#000; color:#fff; border:none; padding:10px 20px; border-radius:20px; cursor:pointer; font-weight:600;" onclick="installApp()">
-                    Instalar App
-                </button>
-            </nav>
-        </header>
-
-        <section class="info-content">
-            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=2070&auto=format&fit=crop"
-                alt="Barbería" class="hero-image">
-
-            <h1>BIENVENIDOS A HARRY BARBER</h1>
-            <p>
-                Esta iniciativa de mejorar la atención mediante esta app/web ayudará al cliente que desee reservar su
-                cita con mayor anticipación y no tener que esperar largas colas.
-            </p>
-            <p class="bold-footer-text">
-                Somos Jarry Barber y los esperamos.
-            </p>
-        </section>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <div class="icon-circle"><i class="fas fa-scissors"></i></div>
-                <span class="logo-name">Harry Barber</span>
-            </div>
-            <div class="social-box">
-                <h4>Siguenos</h4>
-                <a href="#" class="fb-icon"><i class="fab fa-facebook"></i></a>
-            </div>
-        </div>
-        <div class="copyright-bar">
-            © 2025 Codeol. Todos los derechos reservados.
-        </div>
-    </footer>
-
+    <!-- navbar -->
+    <nav class="navbar">
+        <!-- logo -->
+        <img class="logo" src="/images/logo/stylejarry.png" alt="">
+        <a class="btn-bar" href="">Barbero</a>
+        <a class="btn-reservar" href="">Reservar</a>
+    </nav>
+    
     <!-- PIN Modal -->
-    <div id="pinModal" class="pin-modal">
-        <div class="pin-container">
-            <h2 id="pinTitle">Registrar Código PIN</h2>
-            <p id="pinSub" style="margin-bottom: 20px; color: #666;">Crea un código de 4 dígitos para acceder al panel.
-            </p>
-            <div class="pin-inputs">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+    <div id="pinModal" class="pin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(20px); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:white; padding:60px 40px; border-radius:40px; text-align:center; width:90%; max-width:450px; box-shadow:0 40px 100px rgba(0,0,0,0.2); position:relative;">
+            <div style="position:absolute; top:0; left:0; width:100%; height:6px; background:linear-gradient(90deg, #000, #D4AF37);"></div>
+            <h2 id="pinTitle" style="margin-bottom:12px; font-weight:800; font-size:28px;">Registrar Código PIN</h2>
+            <p id="pinSub" style="margin-bottom:20px; color:#666;">Crea un código de 4 dígitos para acceder al panel.</p>
+            <div style="display:flex; gap:15px; justify-content:center; margin:40px 0;">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
             </div>
-            <button class="btn-pin" onclick="handlePinSubmit()">Confirmar</button>
-            <p id="pinError">Código incorrecto</p>
-            <button onclick="closePinModal()"
-                style="background: none; border: none; margin-top: 15px; color: #999; cursor: pointer;">Cancelar</button>
+            <button class="btn-pin" onclick="handlePinSubmit()" style="background:#000; color:#fff; border:none; padding:18px 30px; border-radius:20px; font-weight:800; font-size:16px; width:100%; cursor:pointer; transition:all 0.3s; box-shadow:0 10px 20px rgba(0,0,0,0.1);">Confirmar</button>
+            <p id="pinError" style="color:#ef4444; margin-top:20px; font-weight:600; font-size:14px; display:none;">Código incorrecto</p>
+            <button onclick="closePinModal()" style="background:none; border:none; margin-top:15px; color:#999; cursor:pointer;">Cancelar</button>
         </div>
     </div>
+    
+    <!-- imagen de fondo -->
+    <div class="container">
+        <img class="image-fondo" src="/images/JERRYSTYLE.png" alt="">
+    
+    <!-- card  -->
+     <div class="card-content-glass">
+        <div class="title-container">
+            <div class="word-group">
+                <h1 class="title-content">B</h1>
+                <h1 class="title-content">i</h1>
+                <h1 class="title-content">e</h1>
+                <h1 class="title-content">n</h1>
+                <h1 class="title-content">v</h1>
+                <h1 class="title-content">e</h1>
+                <h1 class="title-content">n</h1>
+                <h1 class="title-content">i</h1>
+                <h1 class="title-content">d</h1>
+                <h1 class="title-content">o</h1>
+                <h1 class="title-content">s</h1>
+            </div>
+            <div class="word-spacer"></div>
+            <div class="word-group">
+                <h1 class="title-content">a</h1>
+            </div>
+            <div class="word-spacer"></div>
+            <div class="word-group">
+                <h1 class="title-content">J</h1>
+                <h1 class="title-content">A</h1>
+                <h1 class="title-content">R</h1>
+                <h1 class="title-content">R</h1>
+                <h1 class="title-content">Y</h1>
+                <h1 class="title-content">S</h1>
+                <h1 class="title-content">T</h1>
+                <h1 class="title-content">Y</h1>
+                <h1 class="title-content">L</h1>
+                <h1 class="title-content">E</h1>
+            </div>
+        </div>
+        <p class="text-content">Esta iniciativa de mejorar la atención mediante esta app/web ayudará al cliente que desee reservar su cita con mayor anticipación y no tener que esperar largas colas.</p>
+        <p class="text-content-2">JARRY STYLE lo espera.</p>
+     </div>
+    </div>
 
+    <!-- section-1 -->
+     <div class="card-content-glass-section-1">
+        <div class="card-1-glass-dark">
+            <h2 class="card-text">No esperas, te atienden a tu hora</h2>
+            <p class="subtitle-card">En Jarry Style Barbería tu tiempo vale. Reservas tu cita y entras directo al sillón, sin filas eternas ni pérdidas de tiempo. Agenda fácil, llega seguro y sal renovado.</p>
+        </div>
+        <div class="card-2-glass-dark">
+            <h2 class="card-text-2">Tu estilo no es genérico, es personalizado</h2>
+            <p class="subtitle-card-2">Aquí no hacen cortes “en automático”. Analizamos tu rostro, tu estilo y lo que quieres proyectar. Sales con un look que realmente va contigo, no uno más del montón.</p>
+        </div>
+        <div class="card-3-glass-dark">
+            <h2 class="card-text-3">No es solo un corte, es una experiencia</h2>
+            <p class="subtitle-card-3">Ambiente cómodo, atención top y barberos que saben lo que hacen. Entras normal… sales con flow, seguridad y presencia. Por eso, el que viene una vez, vuelve.</p>
+        </div>
+     </div>
+
+     <!-- section-mapa -->
+      <section class="section-mapa">
+        <h2 class="mapa-title">Ubicanos</h2>
+        <div class="mapa-barber">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d246.70218351689226!2d-74.55767967921288!3d-8.378536833161705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a3bd0020999831%3A0xa1ba54cf3f816d6!2sDady%20Barbershop!5e0!3m2!1ses-419!2spe!4v1768448155224!5m2!1ses-419!2spe" width="1820" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </section>
+
+      <!-- footer -->
+       <footer class="footer">
+        <div class="footer-logo">
+            <img class="footer-logo-img" src="/images/logo/stylejarry.png" alt="Jarrystyle">
+            <p class="footer-logo-text">JARRY STYLE</p>
+        </div>
+
+        <p class="footer-quote">“Estilo que se nota, presencia que impone.”</p>
+
+        <!-- redes-sociales -->
+        <div class="redes-sociales">
+            <a class="redes-sociales-link" href="#"><img src="/images/redes-sociales/facebook.png" alt=""> facebook</a>
+            <a class="redes-sociales-link" href="#"><img src="/images/redes-sociales/instagram.png" alt=""> Instagram</a>
+        </div>
+        <p class="footer-copyright">© 2026 Jarry Style. Todos los derechos reservados by Codeol</p>
+       </footer>
+    
     <script>
+        // PIN Authentication System
         const pinModal = document.getElementById('pinModal');
         const pinDigits = document.querySelectorAll('.pin-digit');
         const pinTitle = document.getElementById('pinTitle');
         const pinSub = document.getElementById('pinSub');
         const pinError = document.getElementById('pinError');
-
+        
         let isRegistration = false;
-
+        
+        // Open barber authentication modal
+        document.querySelector('.btn-bar').addEventListener('click', function(e) {
+            e.preventDefault();
+            openBarberAuth();
+        });
+        
         function openBarberAuth() {
             const savedPin = localStorage.getItem('barberPin');
             pinError.style.display = 'none';
             clearPinFields();
-
+            
             if (!savedPin) {
                 isRegistration = true;
                 pinTitle.textContent = "Registrar Código PIN";
@@ -410,15 +152,15 @@
             pinModal.style.display = 'flex';
             pinDigits[0].focus();
         }
-
+        
         function closePinModal() {
             pinModal.style.display = 'none';
         }
-
+        
         function clearPinFields() {
             pinDigits.forEach(input => input.value = '');
         }
-
+        
         // Auto focus next input
         pinDigits.forEach((input, index) => {
             input.addEventListener('input', (e) => {
@@ -426,23 +168,23 @@
                     pinDigits[index + 1].focus();
                 }
             });
-
+            
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Backspace' && !e.target.value && index > 0) {
                     pinDigits[index - 1].focus();
                 }
             });
         });
-
+        
         function handlePinSubmit() {
             let pin = "";
             pinDigits.forEach(input => pin += input.value);
-
+            
             if (pin.length < 4) {
                 showError("Ingresa los 4 dígitos");
                 return;
             }
-
+            
             if (isRegistration) {
                 localStorage.setItem('barberPin', pin);
                 window.location.href = "/pages/admin/panel.html";
@@ -457,60 +199,34 @@
                 }
             }
         }
-
+        
         function showError(msg) {
             pinError.textContent = msg;
             pinError.style.display = "block";
         }
-
+        
+        // Reservation button handler
+        document.querySelector('.btn-reservar').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = "/pages/calender/calender.html";
+        });
+        
         // PWA Installation
         let deferredPrompt;
         
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            const installBtn = document.getElementById('installButton');
-            if (installBtn) {
-                installBtn.style.display = 'inline-block';
-            }
+            // You can add an install button here if needed
+            console.log('PWA install available');
         });
-
-        window.installApp = function() {
-            const installBtn = document.getElementById('installButton');
-            if (installBtn) {
-                installBtn.style.display = 'none';
-            }
-            
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the install prompt');
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        };
-
+        
         // Register PWA Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
                     .then((registration) => {
                         console.log('SW registered: ', registration);
-                        
-                        // Check for updates
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    // New update available
-                                    if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
-                                        window.location.reload();
-                                    }
-                                }
-                            });
-                        });
                     })
                     .catch((registrationError) => {
                         console.log('SW registration failed: ', registrationError);
@@ -519,5 +235,4 @@
         }
     </script>
 </body>
-
 </html>
