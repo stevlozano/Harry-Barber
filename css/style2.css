@@ -6,7 +6,7 @@
 
 body{
     font-family: 'Arial', sans-serif;
-    background-color: #c0bfbfd2;   
+    background-color: #000000fd;   
 }
 
 .logo{
@@ -18,7 +18,7 @@ body{
 .navbar{
     position: fixed;
     top: 20px;
-    left: 15px;
+    left: 5px;
     width: 98.2%;
     display: flex;
     justify-content: space-between;
@@ -35,9 +35,9 @@ body{
 }
 
 .btn-bar{
-    margin-left: 1450px;
+    margin-left: 1560px;
     border: none;
-    background-color: #ffffff;
+    position: absolute;
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
@@ -47,6 +47,7 @@ body{
 .btn-bar:hover{
     transform: scale(1.1);
     box-shadow: 0 4px 20px rgba(184, 184, 184, 0.87);
+    background-color: #ffffff;
 }
 a{
     border: none;
@@ -58,7 +59,7 @@ a{
 
 .btn-reservar{
     border: none;
-    background-color: #ffffff;
+    
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
@@ -68,6 +69,7 @@ a{
 .btn-reservar:hover{
     transform: scale(1.1);
     box-shadow: 0 4px 20px rgba(184, 184, 184, 0.87);
+    background-color: #ffffff;
 }
 a{
     border: none;
@@ -82,9 +84,6 @@ a{
     outline: none !important;
 }
 
-.word-group {
-    text-decoration: none !important;
-}
 .image-fondo{
     width: 100%;
     height: 700px;
@@ -171,7 +170,7 @@ a{
     text-align: center;
     border-radius: 30px;
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-    background: rgba(255, 255, 255, 0.637);
+    background: rgb(255, 255, 255);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -245,13 +244,13 @@ a{
 .section-mapa{
     padding: 40px 40px;
     margin-top: 30px;
-    background-color: #000000;
+    background-color: #ffffff;
     /* border-radius: 30px 30px 0 0; */
 }
 .mapa-title{
     margin-bottom: 20px;
     font-size: 50px;
-    color: #ffffff;
+    color: #000000;
 }
 
 
@@ -306,412 +305,14 @@ a{
     font-weight: 800;
     transform: translateY(30px);
     position: relative;
-}
-    
-/* MOBILE OPTIMIZATIONS ONLY - Desktop layout preserved */
-
-/* Tablets and large phones (768px and down) */
-@media screen and (max-width: 768px) {
-    .navbar {
-        width: calc(100% - 30px);
-        padding: 15px 20px;
-        top: 15px;
-        left: 15px;
-        border-radius: 35px;
-    }
-    
-    .logo {
-        width: 60px;
-        height: 30px;
-    }
-    
-    .btn-bar, .btn-reservar {
-        padding: 12px 18px;
-        font-size: 14px;
-        margin: 0 6px;
-        min-height: 44px;
-        border-radius: 25px;
-    }
-    
-    .card-content-glass {
-        width: calc(100% - 30px);
-        margin: 100px 15px 0 15px;
-        padding: 100px 25px 50px 25px;
-        border-radius: 25px;
-        min-height: 300px;
-    }
-    
-    .title-container {
-        margin-top: -80px;
-        gap: 20px;
-    }
-    
-    .title-content {
-        font-size: clamp(28px, 6vw, 42px);
-        letter-spacing: 1px;
-    }
-    
-    .word-spacer {
-    }
-    
-    .text-content {
-        font-size: clamp(15px, 4vw, 17px);
-        padding: 0 15px;
-    }
-    
-    .text-content-2 {
-        font-size: clamp(17px, 4.5vw, 19px);
-        margin-top: 40px;
-    }
-    
-    /* Stack cards vertically for tablet */
-    .card-content-glass-section-1 {
-        width: calc(100% - 30px);
-        margin: 30px 15px;
-        padding: 70px 25px;
-        flex-direction: column;
-        height: auto;
-        gap: 20px;
-        border-radius: 25px;
-    }
-    
-    .card-1-glass-dark, 
-    .card-2-glass-dark, 
-    .card-3-glass-dark {
-        width: 100%;
-        margin: 10px 0;
-        padding: 30px 20px;
-        border-radius: 20px;
-        min-height: 180px;
-    }
-    
-    .card-text, 
-    .card-text-2, 
-    .card-text-3 {
-        font-size: clamp(20px, 5vw, 26px);
-        margin-bottom: 18px;
-    }
-    
-    .subtitle-card,
-    .subtitle-card-2,
-    .subtitle-card-3 {
-        font-size: clamp(13px, 3vw, 15px);
-        line-height: 1.5;
-    }
-    
-    .redes-sociales {
-        margin: 25px 0 0 0;
-        display: flex;
-        justify-content: center;
-        gap: 18px;
-    }
-    
-    .redes-sociales-link {
-        font-size: 15px;
-        padding: 10px 14px;
-        border-radius: 25px;
-        min-height: 40px;
-    }
-    
-    .section-mapa {
-        padding: 30px 25px;
-        margin-top: 30px;
-        border-radius: 25px;
-    }
-    
-    .mapa-barber iframe {
-        width: 100%;
-        height: 320px;
-        border-radius: 20px;
-        max-width: 100%;
-    }
-    
-    .mapa-title {
-        font-size: clamp(28px, 6vw, 36px);
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    
-    .footer {
-        width: calc(100% - 30px);
-        margin: 30px 15px;
-        padding: 35px 25px;
-        border-radius: 20px;
-        text-align: center;
-    }
-    
-    .footer-logo {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-    
-    .footer-logo-text {
-        font-size: clamp(18px, 4vw, 22px);
-        margin: 10px 0 0 0;
-        text-align: center;
-    }
-    
-    .footer-quote {
-        font-size: clamp(16px, 3.5vw, 18px);
-        margin: 20px 0;
-        text-align: center;
-    }
-    
-    .footer-copyright {
-        font-size: clamp(11px, 2.5vw, 13px);
-        transform: translateY(25px);
-        text-align: center;
-    }
+    margin-left: 650px;
 }
 
-/* Phones (480px and down) */
-@media screen and (max-width: 480px) {
-    .navbar {
-        width: calc(100% - 20px);
-        padding: 12px 15px;
-        top: 10px;
-        left: 10px;
-        border-radius: 30px;
-    }
-    
-    .logo {
-        width: 50px;
-        height: 25px;
-    }
-    
-    .btn-bar, .btn-reservar {
-        padding: 10px 15px;
-        font-size: 13px;
-        margin: 5px;
-        min-height: 44px;
-        border-radius: 25px;
-    }
-    
-    .card-content-glass {
-        width: calc(100% - 20px);
-        margin: 80px 10px 0 10px;
-        padding: 80px 15px 40px 15px;
-        border-radius: 20px;
-        min-height: 280px;
-    }
-    
-    .title-container {
-        margin-top: -60px;
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .title-content {
-        font-size: clamp(24px, 7vw, 32px);
-        letter-spacing: 0.8px;
-    }
-    
-    .word-spacer {
-    }
-    
-    .text-content {
-        font-size: clamp(14px, 4vw, 16px);
-        padding: 0 10px;
-    }
-    
-    .text-content-2 {
-        font-size: clamp(16px, 4.5vw, 18px);
-        margin-top: 30px;
-    }
-    
-    .card-content-glass-section-1 {
-        width: calc(100% - 20px);
-        margin: 20px 10px;
-        padding: 60px 15px;
-        flex-direction: column;
-        height: auto;
-        gap: 18px;
-        border-radius: 20px;
-    }
-    
-    .card-1-glass-dark, 
-    .card-2-glass-dark, 
-    .card-3-glass-dark {
-        width: 100%;
-        margin: 8px 0;
-        padding: 25px 15px;
-        border-radius: 18px;
-        min-height: 160px;
-    }
-    
-    .card-text, 
-    .card-text-2, 
-    .card-text-3 {
-        font-size: clamp(18px, 5vw, 22px);
-        margin-bottom: 15px;
-    }
-    
-    .subtitle-card,
-    .subtitle-card-2,
-    .subtitle-card-3 {
-        font-size: clamp(12px, 3.5vw, 14px);
-        line-height: 1.45;
-    }
-    
-    .redes-sociales {
-        gap: 15px;
-        margin: 20px 0 0 0;
-    }
-    
-    .redes-sociales-link {
-        font-size: 14px;
-        padding: 9px 13px;
-        border-radius: 22px;
-        min-height: 38px;
-    }
-    
-    .section-mapa {
-        padding: 20px 15px;
-        margin-top: 20px;
-        border-radius: 20px;
-    }
-    
-    .mapa-barber iframe {
-        width: 100%;
-        height: 250px;
-        border-radius: 18px;
-        max-width: 100%;
-    
-    
-    .mapa-title {
-        font-size: clamp(24px, 6vw, 32px);
-        margin-bottom: 15px;
-    }
-    
-    .footer {
-        width: calc(100% - 20px);
-        margin: 20px 10px;
-        padding: 25px 15px;
-        border-radius: 18px;
-    }
-    
-    .footer-logo-text {
-        font-size: clamp(16px, 4vw, 20px);
-    }
-    
-    .footer-quote {
-        font-size: clamp(14px, 3.5vw, 16px);
-        margin: 15px 0;
-    }
-    
-    .footer-copyright {
-        font-size: clamp(10px, 2.5vw, 12px);
-        transform: translateY(20px);
-    }
-}
 
-/* Very small phones (320px and below) */
-@media screen and (max-width: 320px) {
-    .navbar {
-        width: calc(100% - 16px);
-        padding: 10px 12px;
-        top: 8px;
-        left: 8px;
-        border-radius: 25px;
-    }
-    
-    .logo {
-        width: 45px;
-        height: 22px;
-    }
-    
-    .btn-bar, .btn-reservar {
-        padding: 9px 13px;
-        font-size: 12px;
-        min-height: 40px;
-        border-radius: 22px;
-    }
-    
-    .card-content-glass {
-        width: calc(100% - 16px);
-        margin: 70px 8px 0 8px;
-        padding: 70px 12px 35px 12px;
-        min-height: 260px;
-        border-radius: 18px;
-    }
-    
-    .title-content {
-        font-size: clamp(22px, 6vw, 28px);
-        letter-spacing: 0.6px;
-    }
-    
-    .text-content {
-        font-size: clamp(13px, 3.8vw, 15px);
-    }
-    
-    .text-content-2 {
-        font-size: clamp(15px, 4.2vw, 17px);
-        margin-top: 25px;
-    }
-    
-    .card-content-glass-section-1 {
-        width: calc(100% - 16px);
-        margin: 18px 8px;
-        padding: 50px 12px;
-        gap: 15px;
-        border-radius: 18px;
-    }
-    
-    .card-1-glass-dark, 
-    .card-2-glass-dark, 
-    .card-3-glass-dark {
-        padding: 22px 12px;
-        min-height: 150px;
-        border-radius: 16px;
-    }
-    
-    .card-text, 
-    .card-text-2, 
-    .card-text-3 {
-        font-size: clamp(17px, 4.8vw, 21px);
-        margin-bottom: 13px;
-    }
-    
-    .subtitle-card,
-    .subtitle-card-2,
-    .subtitle-card-3 {
-        font-size: clamp(11px, 3.2vw, 13px);
-        line-height: 1.4;
-    }
-    
-    .section-mapa {
-        padding: 18px 12px;
-        border-radius: 18px;
-    }
-    
-    .mapa-barber iframe {
-        width: 100%;
-        height: 220px;
-        border-radius: 16px;
-        max-width: 100%;
-    
-    
-    .mapa-title {
-        font-size: clamp(22px, 5.5vw, 30px);
-        margin-bottom: 13px;
-    }
-    
-    .footer {
-        width: calc(100% - 16px);
-        margin: 18px 8px;
-        padding: 22px 12px;
-        border-radius: 16px;
-    }
-    
-    .footer-logo-text {
-        font-size: clamp(15px, 3.8vw, 19px);
-    }
-    
-    .footer-copyright {
-        font-size: clamp(9px, 2.2vw, 11px);
-        transform: translateY(18px);
-    }
-}
+
+
+
+
+
+
+
