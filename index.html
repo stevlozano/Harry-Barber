@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jarry Style</title>
     <!-- Modern Minimalist CSS -->
-    <link rel="stylesheet" href="/css/modern-minimalist.css?v=1.0.0">
+    <link rel="stylesheet" href="/css/modern-minimalist.css?v=1.0.1" crossorigin="anonymous">
     <script src="/frontend-cache.js"></script>
     <script src="/update-config.js"></script>
     <!-- font google -->
@@ -131,15 +131,57 @@
     </footer>
 
     <script>
-        // CSS Loading Verification
-        window.addEventListener('load', function() {
-            const cssLink = document.querySelector('link[href="/css/modern-minimalist.css"]');
-            if (cssLink && cssLink.sheet) {
-                console.log('CSS loaded successfully');
-            } else {
-                console.error('CSS failed to load');
+        // CSS Loading with Brave Browser Fallback
+        function loadCSSFallback() {
+            // Check if CSS loaded properly
+            const cssLink = document.querySelector('link[href*="modern-minimalist.css"]');
+            
+            if (!cssLink || !cssLink.sheet) {
+                console.warn('Primary CSS failed, loading fallback...');
+                
+                // Create dynamic CSS loader
+                const fallbackCSS = document.createElement('link');
+                fallbackCSS.rel = 'stylesheet';
+                fallbackCSS.href = '/css/modern-minimalist.css?v=' + Date.now();
+                fallbackCSS.crossOrigin = 'anonymous';
+                
+                // Add to head
+                document.head.appendChild(fallbackCSS);
+                
+                // Fallback timeout check
+                setTimeout(() => {
+                    if (!fallbackCSS.sheet) {
+                        console.error('CSS still failing, applying inline styles');
+                        applyInlineStyles();
+                    }
+                }, 3000);
             }
-        });
+        }
+        
+        function applyInlineStyles() {
+            // Emergency inline styles for critical elements
+            const style = document.createElement('style');
+            style.textContent = `
+                body { font-family: Arial, sans-serif; background: #f5f5f5; }
+                .navbar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+                         width: 400px; height: 65px; background: rgba(255,255,255,0.95); 
+                         border-radius: 35px; display: flex; justify-content: space-between; 
+                         align-items: center; padding: 0 30px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+                .btn-nav { height: 45px; padding: 0 25px; background: #000; color: #fff; 
+                          border-radius: 35px; text-decoration: none; display: flex; 
+                          align-items: center; font-weight: 600; }
+                @media (max-width: 480px) { 
+                    .navbar { width: 95%; max-width: 300px; }
+                    .btn-nav { display: none; }
+                    .menu-toggle { display: flex !important; width: 45px; height: 45px; 
+                                  background: #000; border: none; border-radius: 35px; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Run CSS verification on load
+        window.addEventListener('load', loadCSSFallback);
         
         // Mobile Menu System
         const menuToggle = document.getElementById('menuToggle');
