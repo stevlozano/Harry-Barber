@@ -19,30 +19,27 @@ body{
     position: fixed;
     top: 20px;
     left: 5px;
-    width: 98.2%;
+    width: calc(100% - 10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 50px;
     padding: 20px 40px;
-    /* background-color: #000000d8;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
     background: rgba(20, 20, 20, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     z-index: 100;
 }
 
 .btn-bar{
-    margin-left: 1560px;
     border: none;
-    position: absolute;
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
     transition: transform 0.3s ease;
     color: #000000;
+    margin-left: auto;
 }
 .btn-bar:hover{
     transform: scale(1.1);
@@ -59,12 +56,12 @@ a{
 
 .btn-reservar{
     border: none;
-    
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
     transition: transform 0.3s ease;
     color: #000000;
+    margin-left: 10px;
 }
 .btn-reservar:hover{
     transform: scale(1.1);
@@ -92,21 +89,18 @@ a{
 }
 
 .card-content-glass{
-    /* background-color: rgba(255, 255, 255, 0.788) !important; */
-    margin-top: -570px;
-    margin-left: 17px;
-    width: 98%;
-    height: 370px;
-    padding: 150px 50px;
-    text-align: center;
-    border-radius: 30px;
-    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
     background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    text-align: center;
     z-index: 1;
     position: relative;
+    width: calc(100% - 34px);
+    margin: -570px 17px 0 17px;
+    padding: 150px 50px;
+    height: 370px;
 }
 
 .title-container {
@@ -161,21 +155,18 @@ a{
 
 /* section-1 */
 .card-content-glass-section-1{
-    /* background-color: rgba(255, 255, 255, 0.788) !important; */
-    margin-top: 230px;
-    margin-left: 17px;
-    width: 98%;
-    height: 370px;
-    padding: 150px 50px;
-    text-align: center;
-    border-radius: 30px;
-    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
     background: rgb(255, 255, 255);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    text-align: center;
     z-index: 1;
     position: relative;
+    width: calc(100% - 34px);
+    margin: 230px 17px 0 17px;
+    padding: 150px 50px;
+    height: 370px;
 }
 
 .card-1-glass-dark{
@@ -242,10 +233,11 @@ a{
 
 /* section-mapa */
 .section-mapa{
-    padding: 40px 40px;
-    margin-top: 30px;
+    padding: 40px;
+    margin: 30px 17px 0 17px;
     background-color: #ffffff;
-    /* border-radius: 30px 30px 0 0; */
+    border-radius: 30px;
+    width: calc(100% - 34px);
 }
 .mapa-title{
     margin-bottom: 20px;
@@ -256,12 +248,11 @@ a{
 
 /* footer */
 .footer{
-    padding: 40px 40px;
-    margin-top: 30px;
-    margin-left: 20px;
+    padding: 40px;
+    margin: 30px 17px 0 17px;
     background-color: #000000;
     color: #ffffff;
-    width: 98%;
+    width: calc(100% - 34px);
     border-radius: 20px;
 }
 
