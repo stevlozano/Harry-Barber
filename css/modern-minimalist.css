@@ -98,6 +98,49 @@ body {
     margin-right: 10px;
 }
 
+/* Mobile Menu Toggle Button - Base Styles */
+.menu-toggle {
+    display: none; /* Hidden by default, shown only on mobile */
+    width: 45px;
+    height: 45px;
+    background: var(--black);
+    border: none;
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: all var(--transition-speed) ease;
+    box-shadow: var(--shadow-light);
+}
+
+.menu-toggle span {
+    width: 20px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+    background: var(--dark-gray);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
 /* PIN Modal - Modern Glass Design */
 .pin-modal {
     position: fixed;
@@ -683,45 +726,7 @@ body {
     }
     
     .menu-toggle {
-        display: flex;
-        width: 45px;
-        height: 45px;
-        background: var(--black);
-        border: none;
-        border-radius: var(--border-radius-lg);
-        cursor: pointer;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
-        transition: all var(--transition-speed) ease;
-        box-shadow: var(--shadow-light);
-    }
-    
-    .menu-toggle:hover {
-        background: var(--dark-gray);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-medium);
-    }
-    
-    .menu-toggle span {
-        width: 20px;
-        height: 2px;
-        background: var(--white);
-        border-radius: 2px;
-        transition: all 0.3s ease;
-    }
-    
-    .menu-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-    
-    .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .menu-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
+        display: flex; /* Show menu toggle on mobile */
     }
     
     .title-content {
