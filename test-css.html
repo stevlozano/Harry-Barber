@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Local CSS Test</title>
+    <link rel="stylesheet" href="/css/modern-minimalist.css?v=test">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-box { 
+            width: 200px; 
+            height: 100px; 
+            background: var(--black); 
+            color: var(--white);
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS Loading Test</h1>
+    <div class="test-box">Black Box Test</div>
+    <p>If this box is black with white text and rounded corners, CSS is working!</p>
+    
+    <script>
+        window.addEventListener('load', function() {
+            const cssLink = document.querySelector('link[href*="modern-minimalist.css"]');
+            if (cssLink && cssLink.sheet) {
+                console.log('✅ CSS loaded successfully');
+                document.body.style.backgroundColor = '#f0f0f0';
+            } else {
+                console.error('❌ CSS failed to load');
+                document.body.style.backgroundColor = '#ffcccc';
+            }
+        });
+    </script>
+</body>
+</html>

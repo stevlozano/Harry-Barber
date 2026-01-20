@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jarry Style</title>
     <!-- Modern Minimalist CSS -->
-    <link rel="stylesheet" href="/css/modern-minimalist.css?v=1.0.1" crossorigin="anonymous">
+    <link rel="preload" href="/css/modern-minimalist.css?v=1.0.2" as="style" onload="this.onload=null;this.rel='stylesheet'" crossorigin="anonymous">
+    <noscript><link rel="stylesheet" href="/css/modern-minimalist.css?v=1.0.2" crossorigin="anonymous"></noscript>
     <script src="/frontend-cache.js"></script>
     <script src="/update-config.js"></script>
     <!-- font google -->
@@ -131,53 +132,179 @@
     </footer>
 
     <script>
-        // CSS Loading with Brave Browser Fallback
+        // Enhanced CSS Loading with Multiple Fallbacks
         function loadCSSFallback() {
             // Check if CSS loaded properly
-            const cssLink = document.querySelector('link[href*="modern-minimalist.css"]');
+            const cssLinks = document.querySelectorAll('link[href*="modern-minimalist.css"]');
+            let cssLoaded = false;
             
-            if (!cssLink || !cssLink.sheet) {
-                console.warn('Primary CSS failed, loading fallback...');
+            // Check all CSS links
+            cssLinks.forEach(link => {
+                if (link.sheet) {
+                    cssLoaded = true;
+                }
+            });
+            
+            if (!cssLoaded) {
+                console.warn('CSS not detected, implementing fallback strategy...');
                 
-                // Create dynamic CSS loader
-                const fallbackCSS = document.createElement('link');
-                fallbackCSS.rel = 'stylesheet';
-                fallbackCSS.href = '/css/modern-minimalist.css?v=' + Date.now();
-                fallbackCSS.crossOrigin = 'anonymous';
+                // Strategy 1: Force load with different approach
+                const forceCSS = document.createElement('link');
+                forceCSS.rel = 'stylesheet';
+                forceCSS.href = '/css/modern-minimalist.css?v=' + Math.random();
+                forceCSS.crossOrigin = 'anonymous';
+                document.head.appendChild(forceCSS);
                 
-                // Add to head
-                document.head.appendChild(fallbackCSS);
+                // Strategy 2: Apply critical inline styles immediately
+                applyCriticalStyles();
                 
-                // Fallback timeout check
+                // Strategy 3: Timeout verification
                 setTimeout(() => {
-                    if (!fallbackCSS.sheet) {
-                        console.error('CSS still failing, applying inline styles');
-                        applyInlineStyles();
+                    if (!forceCSS.sheet) {
+                        console.error('Force loading failed, applying full emergency styles');
+                        applyFullEmergencyStyles();
+                    } else {
+                        console.log('✅ CSS successfully loaded via fallback');
                     }
-                }, 3000);
+                }, 2000);
+            } else {
+                console.log('✅ CSS loaded normally');
             }
         }
         
-        function applyInlineStyles() {
-            // Emergency inline styles for critical elements
-            const style = document.createElement('style');
-            style.textContent = `
-                body { font-family: Arial, sans-serif; background: #f5f5f5; }
-                .navbar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
-                         width: 400px; height: 65px; background: rgba(255,255,255,0.95); 
-                         border-radius: 35px; display: flex; justify-content: space-between; 
-                         align-items: center; padding: 0 30px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-                .btn-nav { height: 45px; padding: 0 25px; background: #000; color: #fff; 
-                          border-radius: 35px; text-decoration: none; display: flex; 
-                          align-items: center; font-weight: 600; }
+        function applyCriticalStyles() {
+            // Essential styles to prevent broken layout
+            const criticalStyle = document.createElement('style');
+            criticalStyle.textContent = `
+                .navbar { 
+                    position: fixed !important; 
+                    top: 20px !important; 
+                    left: 50% !important; 
+                    transform: translateX(-50%) !important;
+                    width: 400px !important; 
+                    height: 65px !important; 
+                    background: rgba(255,255,255,0.95) !important;
+                    border-radius: 35px !important; 
+                    display: flex !important; 
+                    justify-content: space-between !important;
+                    align-items: center !important; 
+                    padding: 0 30px !important; 
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+                    z-index: 1000 !important;
+                }
+                .btn-nav { 
+                    height: 45px !important; 
+                    padding: 0 25px !important; 
+                    background: #000 !important; 
+                    color: #fff !important;
+                    border-radius: 35px !important; 
+                    text-decoration: none !important; 
+                    display: flex !important;
+                    align-items: center !important; 
+                    font-weight: 600 !important;
+                    border: none !important;
+                }
                 @media (max-width: 480px) { 
-                    .navbar { width: 95%; max-width: 300px; }
-                    .btn-nav { display: none; }
-                    .menu-toggle { display: flex !important; width: 45px; height: 45px; 
-                                  background: #000; border: none; border-radius: 35px; }
+                    .navbar { width: 95% !important; max-width: 300px !important; }
+                    .btn-nav { display: none !important; }
+                    .menu-toggle { 
+                        display: flex !important; 
+                        width: 45px !important; 
+                        height: 45px !important;
+                        background: #000 !important; 
+                        border: none !important; 
+                        border-radius: 35px !important;
+                        cursor: pointer !important;
+                        flex-direction: column !important;
+                        justify-content: center !important;
+                        align-items: center !important;
+                        gap: 4px !important;
+                    }
                 }
             `;
-            document.head.appendChild(style);
+            document.head.appendChild(criticalStyle);
+        }
+        
+        function applyFullEmergencyStyles() {
+            // Complete emergency styling when all else fails
+            const emergencyStyle = document.createElement('style');
+            emergencyStyle.textContent = `
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { 
+                    font-family: 'Inter', Arial, sans-serif; 
+                    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+                    color: #000;
+                    line-height: 1.6;
+                }
+                .navbar { 
+                    position: fixed !important; 
+                    top: 20px !important; 
+                    left: 50% !important; 
+                    transform: translateX(-50%) !important;
+                    width: 400px !important; 
+                    height: 65px !important; 
+                    background: rgba(255,255,255,0.95) !important;
+                    border-radius: 35px !important; 
+                    display: flex !important; 
+                    justify-content: space-between !important;
+                    align-items: center !important; 
+                    padding: 0 30px !important; 
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+                    z-index: 1000 !important;
+                    backdrop-filter: blur(20px) !important;
+                }
+                .logo { 
+                    width: 60px !important; 
+                    height: auto !important; 
+                    border-radius: 15px !important;
+                }
+                .btn-nav { 
+                    height: 45px !important; 
+                    padding: 0 25px !important; 
+                    background: #000 !important; 
+                    color: #fff !important;
+                    border-radius: 35px !important; 
+                    text-decoration: none !important; 
+                    display: flex !important;
+                    align-items: center !important; 
+                    font-weight: 600 !important;
+                    border: none !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s ease !important;
+                }
+                .btn-nav:hover { 
+                    background: #333 !important; 
+                    transform: translateY(-3px) !important;
+                }
+                @media (max-width: 480px) { 
+                    .navbar { 
+                        width: 95% !important; 
+                        max-width: 300px !important; 
+                        padding: 0 15px !important;
+                    }
+                    .btn-nav { display: none !important; }
+                    .menu-toggle { 
+                        display: flex !important; 
+                        width: 45px !important; 
+                        height: 45px !important;
+                        background: #000 !important; 
+                        border: none !important; 
+                        border-radius: 35px !important;
+                        cursor: pointer !important;
+                        flex-direction: column !important;
+                        justify-content: center !important;
+                        align-items: center !important;
+                        gap: 4px !important;
+                    }
+                    .menu-toggle span {
+                        width: 20px !important;
+                        height: 2px !important;
+                        background: #fff !important;
+                        border-radius: 2px !important;
+                    }
+                }
+            `;
+            document.head.appendChild(emergencyStyle);
         }
         
         // Run CSS verification on load
