@@ -131,6 +131,16 @@
     </footer>
 
     <script>
+        // CSS Loading Verification
+        window.addEventListener('load', function() {
+            const cssLink = document.querySelector('link[href="/css/modern-minimalist.css"]');
+            if (cssLink && cssLink.sheet) {
+                console.log('CSS loaded successfully');
+            } else {
+                console.error('CSS failed to load');
+            }
+        });
+        
         // Mobile Menu System
         const menuToggle = document.getElementById('menuToggle');
         const mobileMenuModal = document.getElementById('mobileMenuModal');
