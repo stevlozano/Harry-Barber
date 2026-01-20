@@ -19,7 +19,25 @@
         <img class="logo" src="/images/logo/stylejarry.png" alt="Jarry Style">
         <a class="btn-nav" href="">Barbero</a>
         <a class="btn-nav" href="">Reservar</a>
+        <!-- Mobile Menu Button -->
+        <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
+    
+    <!-- Mobile Menu Modal -->
+    <div class="mobile-menu-modal" id="mobileMenuModal">
+        <div class="mobile-menu-content">
+            <h3 class="mobile-menu-title">Menú</h3>
+            <div class="mobile-menu-options">
+                <a class="mobile-menu-btn" href="" id="mobileBarberoBtn">Barbero</a>
+                <a class="mobile-menu-btn" href="" id="mobileReservarBtn">Reservar</a>
+            </div>
+            <button class="mobile-menu-close" id="closeMobileMenu">Cerrar</button>
+        </div>
+    </div>
 
     <!-- PIN Modal -->
     <div id="pinModal" class="pin-modal">
@@ -113,6 +131,58 @@
     </footer>
 
     <script>
+        // Mobile Menu System
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenuModal = document.getElementById('mobileMenuModal');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileBarberoBtn = document.getElementById('mobileBarberoBtn');
+        const mobileReservarBtn = document.getElementById('mobileReservarBtn');
+        
+        // Toggle mobile menu
+        menuToggle.addEventListener('click', function() {
+            const isOpen = mobileMenuModal.style.display === 'flex';
+            if (isOpen) {
+                closeMobileMenuHandler();
+            } else {
+                openMobileMenu();
+            }
+        });
+        
+        function openMobileMenu() {
+            mobileMenuModal.style.display = 'flex';
+            menuToggle.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        function closeMobileMenuHandler() {
+            mobileMenuModal.style.display = 'none';
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+        
+        // Close menu when clicking close button
+        closeMobileMenu.addEventListener('click', closeMobileMenuHandler);
+        
+        // Close menu when clicking outside
+        mobileMenuModal.addEventListener('click', function(e) {
+            if (e.target === mobileMenuModal) {
+                closeMobileMenuHandler();
+            }
+        });
+        
+        // Mobile menu button handlers
+        mobileBarberoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeMobileMenuHandler();
+            openBarberAuth(); // Reuse existing barber auth function
+        });
+        
+        mobileReservarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeMobileMenuHandler();
+            window.location.href = "/pages/calender/calender.html";
+        });
+        
         // PIN Authentication System
         const pinModal = document.getElementById('pinModal');
         const pinDigits = document.querySelectorAll('.pin-digit');
