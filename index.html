@@ -1,105 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jarry Style</title>
-    <!-- css -->
-     <link rel="stylesheet" href="/css/style2.css">
-     <link rel="stylesheet" href="/css/responsive/desktop.css">
-     <link rel="stylesheet" href="/css/responsive/tablets.css">
-     <link rel="stylesheet" href="/css/responsive/movil.css">
-     <script src="/frontend-cache.js"></script>
+    <!-- Modern Minimalist CSS -->
+    <link rel="stylesheet" href="/css/modern-minimalist.css">
+    <script src="/frontend-cache.js"></script>
     <script src="/update-config.js"></script>
-     <!-- font google -->
+    <!-- font google -->
 </head>
+
 <body>
     <!-- navbar -->
     <nav class="navbar">
         <!-- logo -->
-        <img class="logo" src="/images/logo/stylejarry.png" alt="">
-        <a class="btn-bar" href="">Barbero</a>
-        <a class="btn-reservar" href="">Reservar</a>
+        <img class="logo" src="/images/logo/stylejarry.png" alt="Jarry Style">
+        <a class="btn-nav" href="">Barbero</a>
+        <a class="btn-nav" href="">Reservar</a>
     </nav>
-    
+
     <!-- PIN Modal -->
-    <div id="pinModal" class="pin-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(20px); z-index:9999; justify-content:center; align-items:center;">
-        <div style="background:white; padding:60px 40px; border-radius:40px; text-align:center; width:90%; max-width:450px; box-shadow:0 40px 100px rgba(0,0,0,0.2); position:relative;">
-            <div style="position:absolute; top:0; left:0; width:100%; height:6px; background:linear-gradient(90deg, #000, #D4AF37);"></div>
-            <h2 id="pinTitle" style="margin-bottom:12px; font-weight:800; font-size:28px;">Registrar Código PIN</h2>
-            <p id="pinSub" style="margin-bottom:20px; color:#666;">Crea un código de 4 dígitos para acceder al panel.</p>
-            <div style="display:flex; gap:15px; justify-content:center; margin:40px 0;">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
-                <input type="password" maxlength="1" class="pin-digit" pattern="\d*" style="width:65px; height:80px; border:2px solid #f1f1f1; border-radius:20px; font-size:32px; text-align:center; font-weight:800; background:#f9f9f9; transition:all 0.3s;">
+    <div id="pinModal" class="pin-modal">
+        <div class="pin-modal-content">
+            <div class="modal-header"></div>
+            <h2 id="pinTitle" class="modal-title">Registrar Código PIN</h2>
+            <p id="pinSub" class="modal-subtitle">Crea un código de 4 dígitos para acceder al panel.</p>
+            <div class="pin-inputs">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
+                <input type="password" maxlength="1" class="pin-digit" pattern="\d*">
             </div>
-            <button class="btn-pin" onclick="handlePinSubmit()" style="background:#000; color:#fff; border:none; padding:18px 30px; border-radius:20px; font-weight:800; font-size:16px; width:100%; cursor:pointer; transition:all 0.3s; box-shadow:0 10px 20px rgba(0,0,0,0.1);">Confirmar</button>
-            <p id="pinError" style="color:#ef4444; margin-top:20px; font-weight:600; font-size:14px; display:none;">Código incorrecto</p>
-            <button onclick="closePinModal()" style="background:none; border:none; margin-top:15px; color:#999; cursor:pointer;">Cancelar</button>
+            <button class="btn-pin" onclick="handlePinSubmit()">Confirmar</button>
+            <p id="pinError" class="modal-error">Código incorrecto</p>
+            <button onclick="closePinModal()" class="btn-cancel-modal">Cancelar</button>
         </div>
-    </div>
-    
-    <!-- imagen de fondo -->
-    <div class="container">
-        <img class="image-fondo" src="/images/JERRYSTYLE.png" alt="">
-    
-    <!-- card  -->
-     <div class="card-content-glass">
-        <div class="title-container">
-            <div class="word-group">
-                <h1 class="title-content">Bienvenidos a JARRY STYLE</h1>
-            </div>
-            
-        </div>
-        <p class="text-content">Esta iniciativa de mejorar la atención mediante esta app/web ayudará al cliente que desee reservar su cita con mayor anticipación y no tener que esperar largas colas.</p>
-        <p class="text-content-2">JARRY STYLE lo espera.</p>
-     </div>
     </div>
 
-    <!-- section-1 -->
-     <div class="card-content-glass-section-1">
-        <div class="card-1-glass-dark">
+    <!-- Hero Section -->
+    <div class="container">
+        <img class="image-fondo" src="/images/JERRYSTYLE.png" alt="Jarry Style Background">
+
+        <!-- Glass Card -->
+        <div class="card-content-glass">
+            <div class="title-container">
+                <div class="word-group">
+                    <h1 class="title-content">Bienvenidos a JARRY STYLE</h1>
+                </div>
+            </div>
+            <p class="text-content">Esta iniciativa de mejorar la atención mediante esta app/web ayudará al cliente que desee reservar su cita con mayor anticipación y no tener que esperar largas colas.</p>
+            <p class="text-content-2">JARRY STYLE lo espera.</p>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="card-content-glass-section-1">
+        <div class="card-feature">
             <h2 class="card-text">No esperas, te atienden a tu hora</h2>
             <p class="subtitle-card">En Jarry Style Barbería tu tiempo vale. Reservas tu cita y entras directo al sillón, sin filas eternas ni pérdidas de tiempo. Agenda fácil, llega seguro y sal renovado.</p>
         </div>
-        <div class="card-2-glass-dark">
-            <h2 class="card-text-2">Tu estilo no es genérico, es personalizado</h2>
-            <p class="subtitle-card-2">Aquí no hacen cortes “en automático”. Analizamos tu rostro, tu estilo y lo que quieres proyectar. Sales con un look que realmente va contigo, no uno más del montón.</p>
+        <div class="card-feature">
+            <h2 class="card-text">Tu estilo no es genérico, es personalizado</h2>
+            <p class="subtitle-card">Aquí no hacen cortes "en automático". Analizamos tu rostro, tu estilo y lo que quieres proyectar. Sales con un look que realmente va contigo, no uno más del montón.</p>
         </div>
-        <div class="card-3-glass-dark">
-            <h2 class="card-text-3">No es solo un corte, es una experiencia</h2>
-            <p class="subtitle-card-3">Ambiente cómodo, atención top y barberos que saben lo que hacen. Entras normal… sales con flow, seguridad y presencia. Por eso, el que viene una vez, vuelve.</p>
+        <div class="card-feature">
+            <h2 class="card-text">No es solo un corte, es una experiencia</h2>
+            <p class="subtitle-card">Ambiente cómodo, atención top y barberos que saben lo que hacen. Entras normal… sales con flow, seguridad y presencia. Por eso, el que viene una vez, vuelve.</p>
         </div>
-     </div>
+    </div>
 
-     <!-- section-mapa -->
-      <section class="section-mapa">
+    <!-- Map Section -->
+    <section class="section-mapa">
         <h2 class="mapa-title">Ubicanos</h2>
         <div class="mapa-barber">
-            <iframe class="mapa-ja" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d246.70218351689226!2d-74.55767967921288!3d-8.378536833161705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a3bd0020999831%3A0xa1ba54cf3f816d6!2sDady%20Barbershop!5e0!3m2!1ses-419!2spe!4v1768448155224!5m2!1ses-419!2spe" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe class="mapa-ja"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d246.70218351689226!2d-74.55767967921288!3d-8.378536833161705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a3bd0020999831%3A0xa1ba54cf3f816d6!2sDady%20Barbershop!5e0!3m2!1ses-419!2spe!4v1768448155224!5m2!1ses-419!2spe"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-      </section>
+    </section>
 
-      <!-- footer -->
-       <footer class="footer">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="footer-logo">
-            <img class="footer-logo-img" src="/images/logo/stylejarry.png" alt="Jarrystyle">
+            <img class="footer-logo-img" src="/images/logo/stylejarry.png" alt="Jarry Style Logo">
             <p class="footer-logo-text">JARRY STYLE</p>
         </div>
 
-        <p class="footer-quote">“Estilo que se nota, presencia que impone.”</p>
+        <p class="footer-quote">"Estilo que se nota, presencia que impone."</p>
 
-        <!-- redes-sociales -->
+        <!-- Social Media -->
         <div class="redes-sociales">
             <a class="redes-sociales-link" href="#">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
-                facebook
+                Facebook
             </a>
             <a class="redes-sociales-link" href="#">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -108,8 +110,8 @@
             </a>
         </div>
         <p class="footer-copyright">© 2026 Jarry Style. Todos los derechos reservados by Codeol</p>
-       </footer>
-    
+    </footer>
+
     <script>
         // PIN Authentication System
         const pinModal = document.getElementById('pinModal');
@@ -117,20 +119,20 @@
         const pinTitle = document.getElementById('pinTitle');
         const pinSub = document.getElementById('pinSub');
         const pinError = document.getElementById('pinError');
-        
+
         let isRegistration = false;
-        
+
         // Open barber authentication modal
-        document.querySelector('.btn-bar').addEventListener('click', function(e) {
+        document.querySelectorAll('.btn-nav')[0].addEventListener('click', function (e) {
             e.preventDefault();
             openBarberAuth();
         });
-        
+
         function openBarberAuth() {
             const savedPin = localStorage.getItem('barberPin');
             pinError.style.display = 'none';
             clearPinFields();
-            
+
             if (!savedPin) {
                 isRegistration = true;
                 pinTitle.textContent = "Registrar Código PIN";
@@ -143,15 +145,15 @@
             pinModal.style.display = 'flex';
             pinDigits[0].focus();
         }
-        
+
         function closePinModal() {
             pinModal.style.display = 'none';
         }
-        
+
         function clearPinFields() {
             pinDigits.forEach(input => input.value = '');
         }
-        
+
         // Auto focus next input
         pinDigits.forEach((input, index) => {
             input.addEventListener('input', (e) => {
@@ -159,23 +161,23 @@
                     pinDigits[index + 1].focus();
                 }
             });
-            
+
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Backspace' && !e.target.value && index > 0) {
                     pinDigits[index - 1].focus();
                 }
             });
         });
-        
+
         function handlePinSubmit() {
             let pin = "";
             pinDigits.forEach(input => pin += input.value);
-            
+
             if (pin.length < 4) {
                 showError("Ingresa los 4 dígitos");
                 return;
             }
-            
+
             if (isRegistration) {
                 localStorage.setItem('barberPin', pin);
                 window.location.href = "/pages/admin/panel.html";
@@ -190,28 +192,28 @@
                 }
             }
         }
-        
+
         function showError(msg) {
             pinError.textContent = msg;
             pinError.style.display = "block";
         }
-        
+
         // Reservation button handler
-        document.querySelector('.btn-reservar').addEventListener('click', function(e) {
+        document.querySelectorAll('.btn-nav')[1].addEventListener('click', function (e) {
             e.preventDefault();
             window.location.href = "/pages/calender/calender.html";
         });
-        
+
         // PWA Installation
         let deferredPrompt;
-        
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             // You can add an install button here if needed
             console.log('PWA install available');
         });
-        
+
         // Register PWA Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -226,4 +228,5 @@
         }
     </script>
 </body>
+
 </html>

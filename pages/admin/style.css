@@ -1161,7 +1161,7 @@ tr:hover td {
 }
 
 /* Specific Ultra-Compact Tuning (<= 375px / iPhone SE) */
-@media (max-width: 375px) {
+@media (max-width: 380px) {
     .content {
         padding: 75px 12px 110px 12px !important;
         margin-left: -70px !important;
